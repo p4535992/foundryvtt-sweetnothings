@@ -25,11 +25,11 @@
             "path": "languages/en.json"
         }
     ],
-    "url": "https://gitlab.com/geekswordsman/textended",
-    "manifest": "https://gitlab.com/geekswordsman/textended/-/raw/main/module.json",
-    "download": "https://gitlab.com/geekswordsman/textended/-/archive/v1.0.0/textended-v1.0.0.zip",
-    "license": "https://gitlab.com/geekswordsman/textended/-/raw/main/LICENSE",
-    "readme": "https://gitlab.com/geekswordsman/textended/-/raw/main/README.MD",
-    "bugs": "https://gitlab.com/geekswordsman/textended/-/issues",
-    "changelog": "https://gitlab.com/geekswordsman/textended/-/raw/main/CHANGELOG.md"
+    "url": "https://gitlab.com/geekswordsman/SweetNothings",
+    "manifest": "https://gitlab.com/geekswordsman/SweetNothings/-/raw/main/module.json",
+    "download": "https://gitlab.com/geekswordsman/SweetNothings/-/archive/v1.0.0/SweetNothings-v1.0.0.zip",
+    "license": "https://gitlab.com/geekswordsman/SweetNothings/-/raw/main/LICENSE",
+    "readme": "https://gitlab.com/geekswordsman/SweetNothings/-/raw/main/README.MD",
+    "bugs": "https://gitlab.com/geekswordsman/SweetNothings/-/issues",
+    "changelog": "https://gitlab.com/geekswordsman/SweetNothings/-/raw/main/CHANGELOG.md"
   }
