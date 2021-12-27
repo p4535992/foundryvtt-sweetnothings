@@ -11,13 +11,10 @@ export class SweetNothings {
     }
 
     static initialize() {
-        return this.preloadHandlebarTemplates();
-    }
-
-    static ready() {
+        //Currently cannot localize keybindings in v9.238, so name and hint are 
         game.keybindings.register(SWEETNOTHINGS.ID, "whisperSweetNothings", {
-            name: game.i18n.localize("SWEETNOTHINGS.TITLE"),
-            hint: game.i18n.localize("SWEETNOTHINGS.HINT"),
+            name: "Name",
+            hint: "Hint",
             editable: [
                 {
                     key: "KeyW",
@@ -29,6 +26,14 @@ export class SweetNothings {
             restricted: false,
             precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL
         });
+
+        return this.preloadHandlebarTemplates();
+    }
+
+    static ready() {
+        let sweetActions = game.keybindings.actions.get("SweetNothings.whisperSweetNothings");
+        sweetActions.name = game.i18n.localize("SWEETNOTHINGS.TITLE");
+        sweetActions.hint = game.i18n.localize("SWEETNOTHINGS.HINT");
     }
 
     static preloadHandlebarTemplates = async function() {
