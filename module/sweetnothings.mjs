@@ -31,7 +31,7 @@ export class SweetNothings {
     }
 
     static ready() {
-        let sweetActions = game.keybindings.actions.get("SweetNothings.whisperSweetNothings");
+        let sweetActions = game.keybindings.actions.get("sweetnothings.whisperSweetNothings");
         sweetActions.name = game.i18n.localize("SWEETNOTHINGS.TITLE");
         sweetActions.hint = game.i18n.localize("SWEETNOTHINGS.HINT");
     }
