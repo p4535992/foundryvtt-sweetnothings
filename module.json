@@ -1,5 +1,5 @@
 {
-    "name": "SweetNothings",
+    "name": "sweetnothings",
     "title": "Sweet Nothings",
     "description": "Powerful Whisper and Chat Tool!",
     "author": "Geekswordsman (@Geekswordsman#3085)",
@@ -27,7 +27,7 @@
     ],
     "url": "https://gitlab.com/geekswordsman/SweetNothings",
     "manifest": "https://gitlab.com/geekswordsman/SweetNothings/-/raw/main/module.json",
-    "download": "https://gitlab.com/geekswordsman/SweetNothings/-/archive/v1.0.0/SweetNothings-v1.0.0.zip",
+    "download": "https://gitlab.com/geekswordsman/SweetNothings/-/archive/v1.0.0/textended-v1.0.0.zip",
     "license": "https://gitlab.com/geekswordsman/SweetNothings/-/raw/main/LICENSE",
     "readme": "https://gitlab.com/geekswordsman/SweetNothings/-/raw/main/README.MD",
     "bugs": "https://gitlab.com/geekswordsman/SweetNothings/-/issues",
