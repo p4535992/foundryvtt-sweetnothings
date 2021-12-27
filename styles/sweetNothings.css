@@ -1,0 +1,9 @@
+#sweetNothingsDialog .sweetNothingsMessageBox { height: 300px; }
+#sweetNothingsDialog .editor { height: 100%; }
+#sweetNothingsDialog .tox { height: 100%; min-height: 100%; }
+
+#sweetNothingsTargets option::before { font-family: FontAwesome; content: "\f096"; width: 1.3em; text-align: center; display: inline-block; margin-left: 2px; }
+#sweetNothingsTargets option:checked::before { content: "\f046"; }
+
+#sweetNothingsDialog input[type='checkbox'] { height: 14px; margin: 1px 2px; }
+#sweetNothingsDialog .sweetNothingsPlayerList span { display: inline-block; }

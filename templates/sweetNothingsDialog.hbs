@@ -1,0 +1,47 @@
+<form style="min-height: 300px;">
+    <div style="display: inline-block; width: 100%; margin-bottom: 10px">
+        <nav class="sheet-tabs tabs" data-group="sections">
+            <a class="item" data-tab="whisper" data-action="changeTab">{{localize "SWEETNOTHINGS.DIALOG.WHISPER"}}</a>
+            <a class="item" data-tab="chat" data-action="changeTab">{{localize "SWEETNOTHINGS.DIALOG.CHAT"}}</a>
+        </nav>
+        <hr />
+        <section id="sweetNothingsDialogForm">
+            <div class="tab" data-tab="whisper">
+                <label for="sweetNothingsTargets" style="vertical-align: top; margin-right: 10px;">{{localize
+                    "SWEETNOTHINGS.DIALOG.RECIPIENTS"}}:</label>
+                <div class="sweetNothingsPlayerList">
+                    {{#each players}}
+                    <span>
+                        <input type="checkbox" id="sweetNothingTarget-{{id}}" name="sweetNothingTarget"
+                            value="{{id}}" />
+                        <label for="sweetNothingTarget-{{id}}">{{name}}</label>
+                    </span>
+                    {{/each}}
+                </div>
+            </div>
+            <div class="tab" data-tab="chat">
+                <p>{{localize "SWEETNOTHINGS.DIALOG.CHATTEXT"}}</p>
+                <p>{{localize "SWEETNOTHINGS.DIALOG.CHATMODE"}}:
+                    <input type="radio" name="sweetNothingsChatMode" value="ooc" id="sweetNothingsOOC" /> <label
+                        for="sweetNothingsOOC">{{localize "SWEETNOTHINGS.DIALOG.MODES.OOC"}}</label>
+                    <input type="radio" name="sweetNothingsChatMode" value="ic" id="sweetNothingsIC" /> <label
+                        for="sweetNothingsIC">{{localize "SWEETNOTHINGS.DIALOG.MODES.IC"}}</label>
+                    <input type="radio" name="sweetNothingsChatMode" value="emote" id="sweetNothingsEmote" /> <label
+                        for="sweetNothingsEmote">{{localize "SWEETNOTHINGS.DIALOG.MODES.EMOTE"}}</label>
+                    <input type="radio" name="sweetNothingsChatMode" value="other" id="sweetNothingsOther" checked />
+                    <label for="sweetNothingsOther">{{localize "SWEETNOTHINGS.DIALOG.MODES.OTHER"}}</label>
+                </p>
+            </div>
+        </section>
+        <hr />
+        <div class="sweetNothingsMessageBox">
+            {{editor content=messageText target="messageText" button=false owner=true editable=true}}
+        </div>
+    </div><br />
+    <footer class="flexrow">
+        <button type="button" name="cancel" data-action="cancel"><i class="far fa-times-circle"></i>{{localize
+            "SWEETNOTHINGS.BUTTONS.CANCEL"}}</button>
+        <button type="button" name="submit" data-action="submit"><i class="fas fa-check"></i>{{localize
+            "SWEETNOTHINGS.BUTTONS.SUBMIT"}}</button>
+    </footer>
+</form>

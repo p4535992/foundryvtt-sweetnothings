@@ -1,0 +1,35 @@
+{
+    "name": "SweetNothings",
+    "title": "Sweet Nothings",
+    "description": "Powerful Whisper and Chat Tool!",
+    "author": "Geekswordsman (@Geekswordsman#3085)",
+    "authors": [
+        {
+            "name": "Geekswordsman",
+            "discord": "@Geekswordsman#3085"
+        }
+    ],
+    "version": "1.0.0",
+    "minimumCoreVersion": "9",
+    "compatibleCoreVersion": "9",
+    "styles": [ 
+        "styles/sweetNothings.css" 
+    ],
+    "esmodules": [
+        "module/main.mjs"
+    ],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "languages/en.json"
+        }
+    ],
+    "url": "https://gitlab.com/geekswordsman/textended",
+    "manifest": "https://gitlab.com/geekswordsman/textended/-/raw/main/module.json",
+    "download": "https://gitlab.com/geekswordsman/textended/-/archive/v1.0.0/textended-v1.0.0.zip",
+    "license": "https://gitlab.com/geekswordsman/textended/-/raw/main/LICENSE",
+    "readme": "https://gitlab.com/geekswordsman/textended/-/raw/main/README.MD",
+    "bugs": "https://gitlab.com/geekswordsman/textended/-/issues",
+    "changelog": "https://gitlab.com/geekswordsman/textended/-/raw/main/CHANGELOG.md"
+  }

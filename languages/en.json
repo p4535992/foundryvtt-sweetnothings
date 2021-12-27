@@ -1,0 +1,23 @@
+{
+    "SWEETNOTHINGS": {
+        "BUTTONS": {
+            "CANCEL": "Cancel",
+            "SUBMIT": "Send It!"
+        },
+        "DIALOG": {
+            "CHAT": "Chat",
+            "CHATMODE": "Chat Mode",
+            "CHATTEXT": "Your message will be posted to chat for everyone to see!",
+            "MODES": {
+                "EMOTE": "Emote",
+                "IC": "IC",
+                "OOC": "OOC",
+                "OTHER": "Other"
+            },
+            "RECIPIENTS": "Recipient(s)",
+            "WHISPER": "Whisper"
+        },
+        "HINT": "Opens the Sweet Nothings Whisper and Chat Dialog",
+        "TITLE": "Whisper Sweet Nothings"
+    }
+}
