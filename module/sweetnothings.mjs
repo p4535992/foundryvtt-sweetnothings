@@ -1,4 +1,5 @@
 import { SWEETNOTHINGS } from "./config.mjs";
+import { SweetNothingsConfig } from "./forms/sweetNothingsConfig.mjs";
 import { SweetNothingsDialog } from "./forms/sweetNothingsDialog.mjs";
 
 export class SweetNothings {
@@ -26,6 +27,42 @@ export class SweetNothings {
             restricted: false,
             precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL
         });
+
+        //Game Settings
+        const sweetSettings = Object.keys(SWEETNOTHINGS.SETTINGS);
+        for (let setting of sweetSettings) {
+            game.settings.register(SWEETNOTHINGS.ID, setting, SWEETNOTHINGS.SETTINGS[setting]);
+        }
+
+        //Register the setting menu
+        game.settings.registerMenu(SWEETNOTHINGS.ID, "UserConfiguration", {
+            name: "PerUserConfiguration",
+            label: game.i18n.localize("SWEETNOTHINGS.CONFIGURATION.LABEL"),
+            hint: game.i18n.localize("SWEETNOTHINGS.CONFIGURATION.HINT"),
+            icon: "fas fa-wrench",
+            type: SweetNothingsConfig
+        });
+
+        //Handlebar helper for localizing settings
+        Handlebars.registerHelper("sweetNothingsLocalizer", function(key) {
+            return game.i18n.localize(`SWEETNOTHINGS.CONFIGURATION.${key}`);
+        });
+
+        Handlebars.registerHelper('sweetNothingsSelected', function(value1, value2) {
+            if (value1 === value2) {
+                return 'selected';
+            }
+
+            return '';
+        });
+
+        Handlebars.registerHelper('sweetNothingsChecked', function(value1, value2) {
+            if (value1 === value2) {
+                return 'checked';
+            }
+
+            return '';
+        })
 
         return this.preloadHandlebarTemplates();
     }

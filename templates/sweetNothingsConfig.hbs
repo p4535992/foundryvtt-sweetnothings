@@ -1,0 +1,16 @@
+<form id="sweetNothingsConfigForm" onsubmit="preventDefault()">
+    <h1>Configure Defaults</h1>
+    <p>These are the default options that will be set anytime you open the Sweet Nothings dialog.  They are per user, so these settings only affect you!</p>
+    <hr />
+    {{#each sweetSettings}}
+    <div>
+        <b>{{sweetNothingsLocalizer @key}}</b>
+        <select name="{{@key}}">
+            {{#each choices}}
+            <option value="{{@key}}" {{sweetNothingsSelected @key ../value}}>{{localize @this}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <hr />
+    {{/each}}
+</form>

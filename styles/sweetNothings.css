@@ -7,3 +7,6 @@
 
 #sweetNothingsDialog input[type='checkbox'] { height: 14px; margin: 1px 2px; }
 #sweetNothingsDialog .sweetNothingsPlayerList span { display: inline-block; }
+
+#sweetNothingsDialog .sweetNothingsChatmodeSelect { margin-top: 6px; margin-bottom: 6px;}
+#sweetNothingsDialog .sweetNothingsBubbles { padding: 4px; background-color: white; border: 1px solid #000; border-radius: 4px; }

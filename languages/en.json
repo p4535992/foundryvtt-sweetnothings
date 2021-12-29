@@ -4,6 +4,12 @@
             "CANCEL": "Cancel",
             "SUBMIT": "Send It!"
         },
+        "CONFIGURATION": {
+            "DEFAULT_CHATMODE": "Default Chatmode",
+            "DEFAULT_DIALOG": "Default Dialog",
+            "LABEL": "Sweet Nothings Individual User Configuration",
+            "HINT": "Configure your Sweet Nothings preferences"
+        },
         "DIALOG": {
             "CHAT": "Chat",
             "CHATMODE": "Chat Mode",
@@ -18,6 +24,9 @@
             "WHISPER": "Whisper"
         },
         "HINT": "Opens the Sweet Nothings Whisper and Chat Dialog",
-        "TITLE": "Whisper Sweet Nothings"
+        "TITLE": "Whisper Sweet Nothings",
+        "TOOLTIPS": {
+            "CHATMODE": "IC and Emote will cause a bubble around either your selected token or your user defined character's token if no token is selected."
+        }
     }
 }

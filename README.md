@@ -10,4 +10,14 @@ Alternatively, you can swap to the Chat mode, which also allows you to set the v
 
 ## Configuration
 
-The only configuration available for Sweet Nothings is through Foundry's Configure Controls dialog, under the Settings Sidebar.  Sweet Nothings registers it's own category, and you can modify the keybinding shortcut here.
+Sweet Nothings main configuration is through Foundry's Configure Controls dialog, under the Settings Sidebar.  Sweet Nothings registers it's own category, and you can modify the keybinding shortcut here.
+
+You can also define the defaults for the dialog, either through the normal settings sidebar or using the cog at the top of the Whisper Sweet Nothings dialog.
+
+![The Whisper Dialog](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/09d590a32ce2123d7c83c1dfbabc4c76/Sweet_Nothings_Whisper_Dialog.JPG)
+
+![The Chat Dialog](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/a9d2f527bf42d62f561cff27c1ddfdfe/Sweet_Nothings_Chat_Dialog.JPG)
+
+![Configuration Dialog](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/2a970fe1a0988e8eb77d8881b66746dd/Sweet_Nothings_Options.JPG)
+
+![Sample Output](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/f2acfee538cdbd00a6870f55910dcdf6/Sweet_Nothings_Sample.JPG)
