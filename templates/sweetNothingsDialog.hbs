@@ -24,14 +24,14 @@
                 <p class="sweetNothingsChatmodeSelect">{{localize "SWEETNOTHINGS.DIALOG.CHATMODE"}}:
                     <span class="sweetNothingsBubbles" title="{{localize "SWEETNOTHINGS.TOOLTIPS.CHATMODE"}}">
                         <i class="far fa-comment-alt"></i>
-                        <input type="radio" name="sweetNothingsChatMode" value="ic" id="sweetNothingsIC" /> <label
+                        <input type="radio" name="sweetNothingsChatMode" value="ic" id="sweetNothingsIC" {{sweetNothingsChecked 'ic' chatMode}} /> <label
                             for="sweetNothingsIC">{{localize "SWEETNOTHINGS.DIALOG.MODES.IC"}}</label>
-                        <input type="radio" name="sweetNothingsChatMode" value="emote" id="sweetNothingsEmote" /> <label
+                        <input type="radio" name="sweetNothingsChatMode" value="emote" id="sweetNothingsEmote" {{sweetNothingsChecked 'emote' chatMode}} /> <label
                             for="sweetNothingsEmote">{{localize "SWEETNOTHINGS.DIALOG.MODES.EMOTE"}}</label>
                     </span>
-                    <input type="radio" name="sweetNothingsChatMode" value="ooc" id="sweetNothingsOOC" /> <label
+                    <input type="radio" name="sweetNothingsChatMode" value="ooc" id="sweetNothingsOOC" {{sweetNothingsChecked 'ooc' chatMode}} /> <label
                         for="sweetNothingsOOC">{{localize "SWEETNOTHINGS.DIALOG.MODES.OOC"}}</label>
-                    <input type="radio" name="sweetNothingsChatMode" value="other" id="sweetNothingsOther" checked />
+                    <input type="radio" name="sweetNothingsChatMode" value="other" id="sweetNothingsOther" {{sweetNothingsChecked 'other' chatMode}} />
                     <label for="sweetNothingsOther">{{localize "SWEETNOTHINGS.DIALOG.MODES.OTHER"}}</label>
                 </p>
             </div>
