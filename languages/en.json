@@ -18,6 +18,9 @@
             "WHISPER": "Whisper"
         },
         "HINT": "Opens the Sweet Nothings Whisper and Chat Dialog",
-        "TITLE": "Whisper Sweet Nothings"
+        "TITLE": "Whisper Sweet Nothings",
+        "TOOLTIPS": {
+            "CHATMODE": "IC and Emote will cause a bubble around either your selected token or your user defined character's token if no token is selected."
+        }
     }
 }
