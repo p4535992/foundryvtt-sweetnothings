@@ -3,6 +3,7 @@
         <nav class="sheet-tabs tabs" data-group="sections">
             <a class="item" data-tab="whisper" data-action="changeTab">{{localize "SWEETNOTHINGS.DIALOG.WHISPER"}}</a>
             <a class="item" data-tab="chat" data-action="changeTab">{{localize "SWEETNOTHINGS.DIALOG.CHAT"}}</a>
+            <a class="item" data-tab="reply" data-action="changeTab">{{localize "SWEETNOTHINGS.DIALOG.REPLY"}}</a>
         </nav>
         <hr />
         <section id="sweetNothingsDialogForm">
@@ -34,6 +35,24 @@
                     <input type="radio" name="sweetNothingsChatMode" value="other" id="sweetNothingsOther" {{sweetNothingsChecked 'other' chatMode}} />
                     <label for="sweetNothingsOther">{{localize "SWEETNOTHINGS.DIALOG.MODES.OTHER"}}</label>
                 </p>
+            </div>
+            <div class="tab" data-tab="reply">
+                <label for="sweetNothingsTargets" style="vertical-align: top; margin-right: 10px;">{{localize
+                    "SWEETNOTHINGS.DIALOG.RECIPIENTS"}}:</label>
+                <div class="sweetNothingsPlayerList">
+                    {{#each players}}
+                    <span>
+                        {{#if replyTo}}
+                        <input type="checkbox" id="sweetNothingTarget-{{id}}" name="sweetNothingTarget"
+                            value="{{id}}" checked />
+                        {{else}}
+                        <input type="checkbox" id="sweetNothingTarget-{{id}}" name="sweetNothingTarget"
+                            value="{{id}}" />
+                        {{/if}}
+                        <label for="sweetNothingTarget-{{id}}">{{name}}</label>
+                    </span>
+                    {{/each}}
+                </div>
             </div>
         </section>
         <hr />
