@@ -28,6 +28,21 @@ export class SweetNothings {
             precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL
         });
 
+        game.keybindings.register(SWEETNOTHINGS.ID, "whisperSweetNothingsReply", {
+            name: "Name",
+            hint: "Hint",
+            editable: [
+                {
+                    key: "KeyR",
+                    modifiers: ["Alt"]
+                }
+            ],
+            onDown: () => {  },
+            onUp: () => { this.whisperSweetNothingsReply(); },
+            restricted: false,
+            precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL
+        })
+
         //Game Settings
         const sweetSettings = Object.keys(SWEETNOTHINGS.SETTINGS);
         for (let setting of sweetSettings) {
@@ -71,6 +86,12 @@ export class SweetNothings {
         let sweetActions = game.keybindings.actions.get("sweetnothings.whisperSweetNothings");
         sweetActions.name = game.i18n.localize("SWEETNOTHINGS.TITLE");
         sweetActions.hint = game.i18n.localize("SWEETNOTHINGS.HINT");
+
+        sweetActions = game.keybindings.actions.get("sweetnothings.whisperSweetNothingsReply");
+        sweetActions.name = game.i18n.localize("SWEETNOTHINGS.KEYBINDINGS.REPLY.NAME");
+        sweetActions.hint = game.i18n.localize("SWEETNOTHINGS.KEYBINDINGS.REPLY.HINT");
+
+        SweetNothings.dialog = new SweetNothingsDialog();
     }
 
     static preloadHandlebarTemplates = async function() {
@@ -79,7 +100,10 @@ export class SweetNothings {
     }
 
     static whisperSweetNothings() {
-        let dialog = new SweetNothingsDialog();
-        dialog.render(true);
+        SweetNothings.dialog.display();
+    }
+
+    static whisperSweetNothingsReply() {
+        SweetNothings.dialog.display(true);
     }
 }

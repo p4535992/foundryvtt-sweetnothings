@@ -7,31 +7,47 @@
         <hr />
         <section id="sweetNothingsDialogForm">
             <div class="tab" data-tab="whisper">
-                <label for="sweetNothingsTargets" style="vertical-align: top; margin-right: 10px;">{{localize
-                    "SWEETNOTHINGS.DIALOG.RECIPIENTS"}}:</label>
-                <div class="sweetNothingsPlayerList">
-                    {{#each players}}
-                    <span>
-                        <input type="checkbox" id="sweetNothingTarget-{{id}}" name="sweetNothingTarget"
-                            value="{{id}}" />
-                        <label for="sweetNothingTarget-{{id}}">{{name}}</label>
-                    </span>
-                    {{/each}}
+                <div class="flexrow sweetflexrow">
+                    <button alt="{{localize "SWEETNOTHINGS.ALT.REPLY"}}" title="{{localize "SWEETNOTHINGS.ALT.REPLY"}}" class="sweetflexcol2 sweetReply" type="button" name="reply" data-action="reply"><i
+                            class="fas fa-reply"></i>{{localize
+                        "SWEETNOTHINGS.BUTTONS.REPLY"}}</button>
+                    <div class="sweetflexcol9">
+                        <label for="sweetNothingsTargets" style="vertical-align: top; margin-right: 10px;">{{localize
+                            "SWEETNOTHINGS.DIALOG.RECIPIENTS"}}:</label>
+                        <div class="sweetNothingsPlayerList">
+                            {{#each players}}
+                            <span>
+                                {{#if replyTo}}
+                                <input type="checkbox" id="sweetNothingTarget-{{id}}" name="sweetNothingTarget"
+                                    value="{{id}}" checked />
+                                {{else}}
+                                <input type="checkbox" id="sweetNothingTarget-{{id}}" name="sweetNothingTarget"
+                                    value="{{id}}" />
+                                {{/if}}
+                                <label for="sweetNothingTarget-{{id}}">{{name}}</label>
+                            </span>
+                            {{/each}}
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="tab" data-tab="chat">
                 <p>{{localize "SWEETNOTHINGS.DIALOG.CHATTEXT"}}</p>
                 <p class="sweetNothingsChatmodeSelect">{{localize "SWEETNOTHINGS.DIALOG.CHATMODE"}}:
-                    <span class="sweetNothingsBubbles" title="{{localize "SWEETNOTHINGS.TOOLTIPS.CHATMODE"}}">
+                    <span class="sweetNothingsBubbles" title="{{localize " SWEETNOTHINGS.TOOLTIPS.CHATMODE"}}">
                         <i class="far fa-comment-alt"></i>
-                        <input type="radio" name="sweetNothingsChatMode" value="ic" id="sweetNothingsIC" {{sweetNothingsChecked 'ic' chatMode}} /> <label
-                            for="sweetNothingsIC">{{localize "SWEETNOTHINGS.DIALOG.MODES.IC"}}</label>
-                        <input type="radio" name="sweetNothingsChatMode" value="emote" id="sweetNothingsEmote" {{sweetNothingsChecked 'emote' chatMode}} /> <label
-                            for="sweetNothingsEmote">{{localize "SWEETNOTHINGS.DIALOG.MODES.EMOTE"}}</label>
+                        <input type="radio" name="sweetNothingsChatMode" value="ic" id="sweetNothingsIC"
+                            {{sweetNothingsChecked 'ic' chatMode}} /> <label for="sweetNothingsIC">{{localize
+                            "SWEETNOTHINGS.DIALOG.MODES.IC"}}</label>
+                        <input type="radio" name="sweetNothingsChatMode" value="emote" id="sweetNothingsEmote"
+                            {{sweetNothingsChecked 'emote' chatMode}} /> <label for="sweetNothingsEmote">{{localize
+                            "SWEETNOTHINGS.DIALOG.MODES.EMOTE"}}</label>
                     </span>
-                    <input type="radio" name="sweetNothingsChatMode" value="ooc" id="sweetNothingsOOC" {{sweetNothingsChecked 'ooc' chatMode}} /> <label
-                        for="sweetNothingsOOC">{{localize "SWEETNOTHINGS.DIALOG.MODES.OOC"}}</label>
-                    <input type="radio" name="sweetNothingsChatMode" value="other" id="sweetNothingsOther" {{sweetNothingsChecked 'other' chatMode}} />
+                    <input type="radio" name="sweetNothingsChatMode" value="ooc" id="sweetNothingsOOC"
+                        {{sweetNothingsChecked 'ooc' chatMode}} /> <label for="sweetNothingsOOC">{{localize
+                        "SWEETNOTHINGS.DIALOG.MODES.OOC"}}</label>
+                    <input type="radio" name="sweetNothingsChatMode" value="other" id="sweetNothingsOther"
+                        {{sweetNothingsChecked 'other' chatMode}} />
                     <label for="sweetNothingsOther">{{localize "SWEETNOTHINGS.DIALOG.MODES.OTHER"}}</label>
                 </p>
             </div>
@@ -42,9 +58,9 @@
         </div>
     </div><br />
     <footer class="flexrow">
-        <button type="button" name="cancel" data-action="cancel"><i class="far fa-times-circle"></i>{{localize
+        <button type="button" name="cancel" data-action="cancel" alt="{{localize "SWEETNOTHINGS.ALT.CANCEL"}}" title="{{localize "SWEETNOTHINGS.ALT.CANCEL"}}"><i class="far fa-times-circle"></i>{{localize
             "SWEETNOTHINGS.BUTTONS.CANCEL"}}</button>
-        <button type="button" name="submit" data-action="submit"><i class="fas fa-check"></i>{{localize
+        <button type="button" name="submit" data-action="submit" alt="{{localize "SWEETNOTHINGS.ALT.SUBMIT"}}" title="{{localize "SWEETNOTHINGS.ALT.SUBMIT"}}"><i class="fas fa-check"></i>{{localize
             "SWEETNOTHINGS.BUTTONS.SUBMIT"}}</button>
     </footer>
 </form>
