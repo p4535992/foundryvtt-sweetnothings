@@ -1,7 +1,13 @@
 {
     "SWEETNOTHINGS": {
+        "ALT": {
+            "CANCEL": "Cancel and close the Sweet Nothings dialog.",
+            "REPLY": "Reply to the last whisper you received.",
+            "SUBMIT": "Submit and send your Sweet Nothings dialog."
+        },
         "BUTTONS": {
             "CANCEL": "Cancel",
+            "REPLY": "Reply",
             "SUBMIT": "Send It!"
         },
         "CONFIGURATION": {
@@ -21,7 +27,6 @@
                 "OTHER": "Other"
             },
             "RECIPIENTS": "Recipient(s)",
-            "REPLY": "Reply",
             "WHISPER": "Whisper"
         },
         "HINT": "Opens the Sweet Nothings Whisper and Chat Dialog",

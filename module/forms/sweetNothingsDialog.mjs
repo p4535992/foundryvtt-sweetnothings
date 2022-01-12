@@ -43,12 +43,6 @@ export class SweetNothingsDialog extends FormApplication {
         }
 
         html.on('click', "[data-action]", this._handleButtonClick.bind(this));
-
-        //Set Tab
-        this._tabs[0].activate(SweetNothingsDialog._isReply ? "reply" : game.settings.get(SWEETNOTHINGS.ID, "DEFAULT_DIALOG"));
-        if (SweetNothingsDialog._isReply) {
-            this.mode = "reply";
-        }
     }
 
     getData(options) {
@@ -74,6 +68,9 @@ export class SweetNothingsDialog extends FormApplication {
                 break;
             case "cancel":
                 this.close();
+                break;
+            case "reply":
+                this.display(true);
                 break;
             case "submit":
                 await this.submitSweetNothings();
@@ -132,9 +129,7 @@ export class SweetNothingsDialog extends FormApplication {
             speaker: null
         };
 
-        console.log(this.mode, this.whisperTargets, this.replyTarget);
-
-        if (this.mode === "whisper" || this.mode === "reply") {
+        if (this.mode === "whisper") {
             if (this.whisperTargets.length === 0 && this.replyTarget) { this.whisperTargets.push(this.replyTarget); }
 
             if (typeof (this.whisperTargets) === 'boolean') {
