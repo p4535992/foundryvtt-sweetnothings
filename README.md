@@ -6,6 +6,8 @@ This module leverages Foundry v9's new Keybinding API to register a simple, conf
 
 By default, the keybinding is ALT-W.  Pressing this will present the Whisper Sweet Nothings dialog box.  There are two modes - Whisper, and Chat.  Whisper is the default, and you can check as many recipients as you want.
 
+As a nice shortcut, you may use ALT-R to reply to the last whisper you have received.  This will automatically select the person who sent the whisper.
+
 Alternatively, you can swap to the Chat mode, which also allows you to set the various chat modes allowed by Foundry.  In Character (IC) and Emote chat modes will also generate the chat bubble above your token's head.  If you are the GM, this will also set the speaker to your selected token.
 
 ## Configuration
