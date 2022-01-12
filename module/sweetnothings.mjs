@@ -88,8 +88,10 @@ export class SweetNothings {
         sweetActions.hint = game.i18n.localize("SWEETNOTHINGS.HINT");
 
         sweetActions = game.keybindings.actions.get("sweetnothings.whisperSweetNothingsReply");
-        sweetActions.name = game.i18n.localize("SWEETNOTHINGS.TITLE");
-        sweetActions.hint = game.i18n.localize("SWEETNOTHINGS.HINT");
+        sweetActions.name = game.i18n.localize("SWEETNOTHINGS.KEYBINDINGS.REPLY.NAME");
+        sweetActions.hint = game.i18n.localize("SWEETNOTHINGS.KEYBINDINGS.REPLY.HINT");
+
+        SweetNothings.dialog = new SweetNothingsDialog();
     }
 
     static preloadHandlebarTemplates = async function() {
@@ -98,12 +100,10 @@ export class SweetNothings {
     }
 
     static whisperSweetNothings() {
-        let dialog = new SweetNothingsDialog();
-        dialog.render(true);
+        SweetNothings.dialog.display();
     }
 
     static whisperSweetNothingsReply() {
-        let dialog = new SweetNothingsDialog({reply: true});
-        dialog.render(true);
+        SweetNothings.dialog.display(true);
     }
 }

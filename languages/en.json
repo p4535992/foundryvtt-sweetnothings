@@ -21,11 +21,15 @@
                 "OTHER": "Other"
             },
             "RECIPIENTS": "Recipient(s)",
+            "REPLY": "Reply",
             "WHISPER": "Whisper"
         },
         "HINT": "Opens the Sweet Nothings Whisper and Chat Dialog",
         "KEYBINDINGS": {
-
+            "REPLY": {
+                "HINT": "Opens the Sweet Nothings Dialog, replying to the last whisper sent to you.",
+                "NAME": "Reply using Whisper Sweet Nothings"
+            }
         },
         "TITLE": "Whisper Sweet Nothings",
         "TOOLTIPS": {
