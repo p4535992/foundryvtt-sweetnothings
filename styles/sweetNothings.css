@@ -10,3 +10,10 @@
 
 #sweetNothingsDialog .sweetNothingsChatmodeSelect { margin-top: 6px; margin-bottom: 6px;}
 #sweetNothingsDialog .sweetNothingsBubbles { padding: 4px; background-color: white; border: 1px solid #000; border-radius: 4px; }
+
+.sweetflexrow { align-content: center; flex-wrap: wrap;}
+
+.sweetflexcol2 { flex-grow: 2; }
+.sweetflexcol9 { flex-grow: 9; }
+
+.sweetReply { margin: 4px; }

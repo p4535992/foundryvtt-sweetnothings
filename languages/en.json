@@ -1,7 +1,13 @@
 {
     "SWEETNOTHINGS": {
+        "ALT": {
+            "CANCEL": "Cancel and close the Sweet Nothings dialog.",
+            "REPLY": "Reply to the last whisper you received.",
+            "SUBMIT": "Submit and send your Sweet Nothings dialog."
+        },
         "BUTTONS": {
             "CANCEL": "Cancel",
+            "REPLY": "Reply",
             "SUBMIT": "Send It!"
         },
         "CONFIGURATION": {
@@ -24,6 +30,12 @@
             "WHISPER": "Whisper"
         },
         "HINT": "Opens the Sweet Nothings Whisper and Chat Dialog",
+        "KEYBINDINGS": {
+            "REPLY": {
+                "HINT": "Opens the Sweet Nothings Dialog, replying to the last whisper sent to you.",
+                "NAME": "Reply using Whisper Sweet Nothings"
+            }
+        },
         "TITLE": "Whisper Sweet Nothings",
         "TOOLTIPS": {
             "CHATMODE": "IC and Emote will cause a bubble around either your selected token or your user defined character's token if no token is selected."
