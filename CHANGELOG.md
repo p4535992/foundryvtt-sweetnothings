@@ -1,4 +1,8 @@
 # Sweet Nothings
+## v1.2.1 - 2022-02-21
+ - Removed unnecessary console.log
+ - Fixed keybind event handlers to prevent default browser behaviors from also firing
+  
 ## v1.2.0 - 2022-01-12
  - Added Reply functionality
  

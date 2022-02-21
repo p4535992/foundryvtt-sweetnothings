@@ -9,7 +9,7 @@
             "discord": "@Geekswordsman#3085"
         }
     ],
-    "version": "1.2.0",
+    "version": "1.2.1",
     "minimumCoreVersion": "9",
     "compatibleCoreVersion": "9",
     "styles": [ 
@@ -27,7 +27,7 @@
     ],
     "url": "https://gitlab.com/geekswordsman/sweetnothings",
     "manifest": "https://gitlab.com/geekswordsman/sweetnothings/-/raw/main/module.json",
-    "download": "https://gitlab.com/geekswordsman/sweetnothings/-/archive/v1.2.0/sweetnothings-v1.2.0.zip",
+    "download": "https://gitlab.com/geekswordsman/sweetnothings/-/archive/v1.2.1/sweetnothings-v1.2.1.zip",
     "license": "https://gitlab.com/geekswordsman/sweetnothings/-/raw/main/LICENSE",
     "readme": "https://gitlab.com/geekswordsman/sweetnothings/-/raw/main/README.MD",
     "bugs": "https://gitlab.com/geekswordsman/sweetnothings/-/issues",

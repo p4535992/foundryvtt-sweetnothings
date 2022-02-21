@@ -35,7 +35,7 @@ export class SweetNothingsDialog extends FormApplication {
 
         //Add a configure button to the title bar
         const link = $(`<a id="sweetNothingsDialogConfig" title="${game.i18n.localize('SWEETNOTHINGS.CONFIGURATION.HINT')}"><i class="fas fa-cog"></i></a>`);
-        console.log(html);
+
         if (html.parents("#sweetNothingsDialog").find("#sweetNothingsDialogConfig").length === 0) {
             link.on("click", () => this.renderConfig());
     

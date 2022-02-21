@@ -101,9 +101,11 @@ export class SweetNothings {
 
     static whisperSweetNothings() {
         SweetNothings.dialog.display();
+        return true;
     }
 
     static whisperSweetNothingsReply() {
         SweetNothings.dialog.display(true);
+        return true;
     }
 }
