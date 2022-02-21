@@ -30,17 +30,23 @@ export class SweetNothingsDialog extends FormApplication {
         return foundry.utils.mergeObject(defaults, overrides);
     }
 
-    activateListeners(html) {
-        super.activateListeners(html);
+    _getHeaderButtons() {
+        let buttons = super._getHeaderButtons();
 
         //Add a configure button to the title bar
-        const link = $(`<a id="sweetNothingsDialogConfig" title="${game.i18n.localize('SWEETNOTHINGS.CONFIGURATION.HINT')}"><i class="fas fa-cog"></i></a>`);
+        buttons.unshift({
+            label: "",
+            class: "",
+            title: game.i18n.localize("SWEETNOTHINGS.CONFIGURATION.HINT"),
+            icon: "fas fa-cog",
+            onclick: () => this.renderConfig()
+        })
 
-        if (html.parents("#sweetNothingsDialog").find("#sweetNothingsDialogConfig").length === 0) {
-            link.on("click", () => this.renderConfig());
-    
-            html.parents("#sweetNothingsDialog").find(".window-title").after(link);
-        }
+        return buttons;
+    }
+
+    activateListeners(html) {
+        super.activateListeners(html);
 
         html.on('click', "[data-action]", this._handleButtonClick.bind(this));
     }
