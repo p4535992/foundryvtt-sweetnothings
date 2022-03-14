@@ -1,0 +1,44 @@
+{
+    "SWEETNOTHINGS": {
+        "ALT": {
+            "CANCEL": "Sweet Nothingsの入力内容をキャンセルし、閉じる。",
+            "REPLY": "最後に秘話を飛ばしてきた相手に返信する。",
+            "SUBMIT": "Sweet Nothingsの入力内容を相手に送る。"
+        },
+        "BUTTONS": {
+            "CANCEL": "キャンセル",
+            "REPLY": "返信",
+            "SUBMIT": "送信"
+        },
+        "CONFIGURATION": {
+            "DEFAULT_CHATMODE": "デフォルトのチャットモード",
+            "DEFAULT_DIALOG": "デフォルトの入力ボックス",
+            "LABEL": "Sweet Nothingsは、ユーザー毎の設定となります",
+            "HINT": "君のSweet Nothingsの設定"
+        },
+        "DIALOG": {
+            "CHAT": "チャット",
+            "CHATMODE": "チャットモード",
+            "CHATTEXT": "このメッセージは、皆が見られるように投稿されます。",
+            "MODES": {
+                "EMOTE": "エモート",
+                "IC": "PC発言",
+                "OOC": "PL発言",
+                "OTHER": "その他"
+            },
+            "RECIPIENTS": "受信者",
+            "WHISPER": "秘話"
+        },
+        "HINT": "Sweet Nothingsの秘話・チャット入力ボックスを開いてください。",
+        "KEYBINDINGS": {
+            "REPLY": {
+                "HINT": "Sweet Nothingsの入力ボックスを開いて、君に送られた最後の秘話に返信してください。",
+                "NAME": "Sweet Nothingsの秘話に返信する"
+            }
+        },
+        "TITLE": "Whisper Sweet Nothings",
+        "TOOLTIPS": {
+            "CHATMODE": "PC発言とエモートは、君が選択したコマや、君がコマを選択していないならば、君がデフォルトに設定したキャラクターの絵が表示されます。"
+        }
+    }
+}
