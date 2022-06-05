@@ -168,7 +168,7 @@ export class SweetNothingsDialog extends FormApplication {
     }
 
     getLastWhisperSender() {
-        let lastMessages = game.messages.filter(m => m.data.type === CONST.CHAT_MESSAGE_TYPES.WHISPER && m.data.whisper.includes(game.userId));
+        let lastMessages = game.messages.filter(m => m.data.whisper.includes(game.userId));
         if (lastMessages) {
             let lastMessage = lastMessages[lastMessages.length -1];
             this.replyTarget = lastMessage?.data?.user;
