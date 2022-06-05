@@ -101,17 +101,18 @@ export class SweetNothingsDialog extends FormApplication {
     getActivePlayers() {
         let activeUsers = [];
         game.users.forEach(user => {
-            if (user.active && user.id != game.userId) {
+            //if (user.active && user.id != game.userId) {
+            if (user.id !== game.userId) {
                 activeUsers.push({ replyTo: user.id === this.#replyTarget, id: user.id, name: user.data.name });
             }
         });
 
         if (this.#replyTarget && !activeUsers.find(a => a.id === this.#replyTarget)) {
             //Reply Target is not online?
-            ui.notifications.warn("Target to reply to is not online.");
+            ui.notifications.warn(game.i18n.localize("SWEETNOTHINGS.WARNINGS.TARGET_NOT_ONLINE"));
             this.#mode = "whisper";
-            this.#replyTarget = null;
-            SweetNothingsDialog._isReply = false;
+            //this.#replyTarget = null;
+            //SweetNothingsDialog._isReply = false;
         }
 
         activeUsers.push({ id: "GM", name: "GM" });
@@ -148,6 +149,7 @@ export class SweetNothingsDialog extends FormApplication {
         };
 
         if (this.#mode === "whisper") {
+            chatData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER;
             if (this.#whisperTargets.length === 0 && this.#replyTarget) { this.#whisperTargets.push(this.#replyTarget); }
 
             if (typeof (this.#whisperTargets) === 'boolean') {

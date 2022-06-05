@@ -8,3 +8,6 @@ Hooks.once('devModeReady', ({ registerPackageDebugFlag }) => {
 
 Hooks.once('init', () => { SweetNothings.initialize(); })
 Hooks.once('ready', () => { SweetNothings.ready(); });
+
+/* For Toast Notifications */
+Hooks.on('createChatMessage', (message) => { SweetNothings.checkForWhisper(message); })

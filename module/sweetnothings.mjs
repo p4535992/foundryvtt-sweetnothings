@@ -49,6 +49,16 @@ export class SweetNothings {
             game.settings.register(SWEETNOTHINGS.ID, setting, SWEETNOTHINGS.SETTINGS[setting]);
         }
 
+        game.settings.register(SWEETNOTHINGS.ID, "WhisperToastNotification", {
+            name: game.i18n.localize("SWEETNOTHINGS.CONFIGURATION.WHISPER_TOAST_NOTIFICATION.Name"),
+            hint: game.i18n.localize("SWEETNOTHINGS.CONFIGURATION.WHISPER_TOAST_NOTIFICATION.Hint"),
+            restricted: false,
+            config: true,
+            default: true,
+            scope: 'client',
+            type: Boolean
+        });
+
         //Register the setting menu
         game.settings.registerMenu(SWEETNOTHINGS.ID, "UserConfiguration", {
             name: "PerUserConfiguration",
@@ -107,5 +117,15 @@ export class SweetNothings {
         let dialog = new SweetNothingsDialog();
         dialog.display(true);
         return true;
+    }
+
+    static checkForWhisper(message) {
+        let enableToastNotification = game.settings.get(SWEETNOTHINGS.ID, "WhisperToastNotification");
+
+        if (enableToastNotification && message.data.whisper && message.data.whisper.includes(game.userId)) {
+            //This message is a whisper to us!
+            let sender = ChatMessage.getSpeaker(message).alias;
+            ui.notifications.info(game.i18n.localize("SWEETNOTHINGS.NOTIFICATIONS.NEW_MESSAGE") + ` ${sender}`);
+        }
     }
 }
