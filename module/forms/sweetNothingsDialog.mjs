@@ -3,13 +3,22 @@ import { SweetNothings } from "../sweetnothings.mjs";
 import { SweetNothingsConfig } from "./sweetNothingsConfig.mjs";
 
 export class SweetNothingsDialog extends FormApplication {
+    #mode = null;
+    #chatMode = null;
+    #whisperTargets = [];
+    #replyTarget = null;
+
     constructor(object, options) {
         super(object, options);
 
-        this.mode = game.settings.get(SWEETNOTHINGS.ID, "DEFAULT_DIALOG");
-        this.chatMode = game.settings.get(SWEETNOTHINGS.ID, "DEFAULT_CHATMODE");
-        this.whisperTargets = [];
-        this.replyTarget = null;
+        this._getDefaults();
+    }
+
+    _getDefaults() {
+        this.#mode = game.settings.get(SWEETNOTHINGS.ID, "DEFAULT_DIALOG");
+        this.#chatMode = game.settings.get(SWEETNOTHINGS.ID, "DEFAULT_CHATMODE");
+        this.#whisperTargets = [];
+        this.#replyTarget = null;
     }
 
     static get defaultOptions() {
@@ -42,7 +51,7 @@ export class SweetNothingsDialog extends FormApplication {
             onclick: () => { this.renderConfig(); }
         });
 
-        SweetNothings.log(false, buttons);
+        SweetNothings.log(false, "Dialog:", this);
 
         return buttons;
     }
@@ -54,13 +63,13 @@ export class SweetNothingsDialog extends FormApplication {
     }
 
     getData(options) {
-        return { players: this.getActivePlayers(), messageText: "", chatMode: this.chatMode }
+        return { players: this.getActivePlayers(), messageText: "", chatMode: this.#chatMode }
     }
 
     async _updateObject(event, formData) {
         SweetNothings.log(false, formData);
-        this.chatMode = CONST.CHAT_MESSAGE_TYPES[formData.sweetNothingsChatMode.toUpperCase()];
-        this.whisperTargets = formData.sweetNothingTarget;
+        this.#chatMode = CONST.CHAT_MESSAGE_TYPES[formData.sweetNothingsChatMode.toUpperCase()];
+        this.#whisperTargets = formData.sweetNothingTarget;
     }
 
     async _handleButtonClick(event) {
@@ -69,8 +78,8 @@ export class SweetNothingsDialog extends FormApplication {
 
         switch (action) {
             case "changeTab":
-                this.mode = clickedElement.data().tab;
-                if (this.mode === "reply") {
+                this.#mode = clickedElement.data().tab;
+                if (this.#mode === "reply") {
                     this.display(true);
                 }
                 break;
@@ -93,15 +102,15 @@ export class SweetNothingsDialog extends FormApplication {
         let activeUsers = [];
         game.users.forEach(user => {
             if (user.active && user.id != game.userId) {
-                activeUsers.push({ replyTo: user.id === this.replyTarget, id: user.id, name: user.data.name });
+                activeUsers.push({ replyTo: user.id === this.#replyTarget, id: user.id, name: user.data.name });
             }
         });
 
-        if (this.replyTarget && !activeUsers.find(a => a.id === this.replyTarget)) {
+        if (this.#replyTarget && !activeUsers.find(a => a.id === this.#replyTarget)) {
             //Reply Target is not online?
             ui.notifications.warn("Target to reply to is not online.");
-            this.mode = "whisper";
-            this.replyTarget = null;
+            this.#mode = "whisper";
+            this.#replyTarget = null;
             SweetNothingsDialog._isReply = false;
         }
 
@@ -114,12 +123,13 @@ export class SweetNothingsDialog extends FormApplication {
         SweetNothingsDialog._isReply = isReply;
         if (isReply) {
             this.getLastWhisperSender();
-            if (!this.replyTarget) {
+            if (!this.#replyTarget) {
                 SweetNothingsDialog._isReply = false; 
                 ui.notifications.warn("No message found to reply to!");
             }
         } else {
-            this.replyTarget = null;
+            this.#replyTarget = null;
+            this._getDefaults();
         }
 
         this.render(true);
@@ -132,24 +142,24 @@ export class SweetNothingsDialog extends FormApplication {
         let chatData = {
             author: game.userId,
             content: messageText,
-            type: this.chatMode,
+            type: this.#chatMode,
             whisper: null,
             speaker: null
         };
 
-        if (this.mode === "whisper") {
-            if (this.whisperTargets.length === 0 && this.replyTarget) { this.whisperTargets.push(this.replyTarget); }
+        if (this.#mode === "whisper") {
+            if (this.#whisperTargets.length === 0 && this.#replyTarget) { this.#whisperTargets.push(this.#replyTarget); }
 
-            if (typeof (this.whisperTargets) === 'boolean') {
+            if (typeof (this.#whisperTargets) === 'boolean') {
                 chatData.whisper = ChatMessage.getWhisperRecipients('gm').map(o => o.id);
             } else {
-                if (this.whisperTargets.includes('GM')) {
-                    this.whisperTargets = this.whisperTargets.filter(t => t !== 'GM').concat(ChatMessage.getWhisperRecipients('gm').map(o => o.id));
+                if (this.#whisperTargets.includes('GM')) {
+                    this.#whisperTargets = this.#whisperTargets.filter(t => t !== 'GM').concat(ChatMessage.getWhisperRecipients('gm').map(o => o.id));
                 }
 
-                chatData.whisper = this.whisperTargets;
+                chatData.whisper = this.#whisperTargets;
             }
-        } else if (this.chatMode === (CONST.CHAT_MESSAGE_TYPES.IC || CONST.CHAT_MESSAGE_TYPES.EMOTE || CONST.CHAT_MESSAGE_TYPES.OOC)) {
+        } else if (this.#chatMode === (CONST.CHAT_MESSAGE_TYPES.IC || CONST.CHAT_MESSAGE_TYPES.EMOTE || CONST.CHAT_MESSAGE_TYPES.OOC)) {
             if (canvas.tokens.controlled.length > 0) {
                 chatData.speaker = ChatMessage.getSpeaker({ token: canvas.tokens.controlled[0] });
             } else {
@@ -159,7 +169,7 @@ export class SweetNothingsDialog extends FormApplication {
             }
         }
 
-        bubble = (chatData.speaker && this.chatMode !== CONST.CHAT_MESSAGE_TYPES.OOC) ? true : false;
+        bubble = (chatData.speaker && this.#chatMode !== CONST.CHAT_MESSAGE_TYPES.OOC) ? true : false;
 
         await ChatMessage.create(chatData, { chatBubble: bubble });
     }
@@ -173,7 +183,7 @@ export class SweetNothingsDialog extends FormApplication {
         let lastMessages = game.messages.filter(m => m.data.whisper.includes(game.userId));
         if (lastMessages) {
             let lastMessage = lastMessages[lastMessages.length -1];
-            this.replyTarget = lastMessage?.data?.user;
+            this.#replyTarget = lastMessage?.data?.user;
         }
     }
 }
