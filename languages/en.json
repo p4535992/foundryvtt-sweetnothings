@@ -2,7 +2,6 @@
     "SWEETNOTHINGS": {
         "ALT": {
             "CANCEL": "Cancel and close the Sweet Nothings dialog.",
-            "REPLY": "Reply to the last whisper you received.",
             "SUBMIT": "Submit and send your Sweet Nothings dialog."
         },
         "BUTTONS": {
@@ -13,16 +12,24 @@
         "CONFIGURATION": {
             "DEFAULT_CHATMODE": "Default Chatmode",
             "DEFAULT_DIALOG": "Default Dialog",
+            "DEFAULTS": {
+                "Hint": "These are the default options that will be set anytime you open the Sweet Nothings dialog.  They are per user, so these settings only affect you!",
+                "Name": "Configure Defaults"
+            },
+            "ENABLE_SOUND": "Enable Notification Sound?",
             "GM_ALWAYS_IC": {
                 "Hint": "Whispers are always flagged as IC, making it play nicely with Tabbed Chat Log module.",
                 "Name": "Whispers always flagged IC?"
             },
             "HINT": "Configure your Sweet Nothings preferences",
             "LABEL": "Sweet Nothings Individual User Configuration",
-            "WHISPER_TOAST_NOTIFICATION": {
-                "Hint": "Receive a toast notification when you are whispered",
-                "Name": "Whisper Toast Notification"
-            }
+            "NOTIFICATIONS": {
+                "Hint": "These settings handle whether, and how, you receive notifications when you receive a whisper.",
+                "Name": "Configure Notifications"
+            },
+            "NOTIFICATION_SOUND": "Notification Sound",
+            "NOTIFICATION_VOLUME": "Notification Volume",
+            "WHISPER_TOAST_NOTIFICATION": "Whisper Toast Notification"
         },
         "DIALOG": {
             "CHAT": "Chat",
@@ -49,7 +56,9 @@
         },
         "TITLE": "Whisper Sweet Nothings",
         "TOOLTIPS": {
-            "CHATMODE": "IC and Emote will cause a bubble around either your selected token or your user defined character's token if no token is selected."
+            "CHATMODE": "IC and Emote will cause a bubble around either your selected token or your user defined character's token if no token is selected.",
+            "REPLY": "Reply to the last whisper you received.",
+            "SAMPLE_SOUND": "Play selected sound"
         },
         "WARNINGS": {
             "TARGET_NOT_ONLINE": "Target to reply to is not online."

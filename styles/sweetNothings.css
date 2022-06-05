@@ -11,6 +11,25 @@
 #sweetNothingsDialog .sweetNothingsChatmodeSelect { margin-top: 6px; margin-bottom: 6px;}
 #sweetNothingsDialog .sweetNothingsBubbles { padding: 4px; background-color: white; border: 1px solid #000; border-radius: 4px; }
 
+#sweetNothingsConfigForm > div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#sweetNothingsConfigForm > div > * {
+    margin-right: 8px;
+}
+
+.sweetNothingsFilePicker {
+    flex: 1;
+    display: flex;
+}
+
+.sweetNothingsPlayButton {
+    width: 28px;
+}
+
 .sweetflexrow { align-content: center; flex-wrap: wrap;}
 
 .sweetflexcol2 { flex-grow: 2; }

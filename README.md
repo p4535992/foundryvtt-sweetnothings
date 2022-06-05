@@ -23,3 +23,13 @@ You can also define the defaults for the dialog, either through the normal setti
 ![Configuration Dialog](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/2a970fe1a0988e8eb77d8881b66746dd/Sweet_Nothings_Options.JPG)
 
 ![Sample Output](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/f2acfee538cdbd00a6870f55910dcdf6/Sweet_Nothings_Sample.JPG)
+
+## Attribution
+- 'ting.ogg' notification sound created by Aesterial-Arts originally titled 'Notification Ping', available at https://freesound.org/people/Aesterial-Arts/sounds/633876/ (CC BY 4.0)
+- 'triple_ting.ogg' notification sound created by wassapp, originally titled 'wassap_notification', available at https://freesound.org/people/Tundidor/sounds/634505/ (CC BY 3.0)
+- 'comm_trill.ogg' notification sound created by TMPZ_1, originally titled 'NotificationLoop', available at https://freesound.org/people/TMPZ_1/sounds/449238/ (CC BY 3.0)
+- 'chord_descend.ogg' notification sound created by ebcrosby, title same, available at https://freesound.org/people/ebcrosby/sounds/332960/ (CC BY 3.0)
+- 'digital_chime.ogg' notification sound created by Jofae, originally titled 'Chime Notification', available at https://freesound.org/people/Jofae/sounds/380482/ (CC0 1.0 Universal)
+- 'computer_chime.ogg' notification sound created by TheAtomicBrain, originally titled 'Computer Chimes - Notification', available at https://freesound.org/people/TheAtomicBrain/sounds/351879/ (CC0 1.0 Universal)
+- 'dinging_chime.ogg' notification sound created by sleepyhead16, originally titled 'strange notification', available at https://freesound.org/people/sleepyhead16/sounds/565907/ (CC0 1.0 Universal)
+- 'notification_ding' notificatnio sound by Daphne_in_Wonderland, originally titled 'Messenger Notification Sound Imitation', with attirbution to "Notification Pop" by elmasmalo1 of Freesound.org, available at https://freesound.org/people/Daphne_in_Wonderland/sounds/400697/ (CC BY 3.0)

@@ -12,7 +12,7 @@ export class SweetNothings {
     }
 
     static initialize() {
-        //Currently cannot localize keybindings in v9.238, so name and hint are 
+        //Currently cannot localize keybindings in v9.238, so name and hint are temporarily not localized.
         game.keybindings.register(SWEETNOTHINGS.ID, "whisperSweetNothings", {
             name: "Name",
             hint: "Hint",
@@ -60,13 +60,31 @@ export class SweetNothings {
         })
 
         game.settings.register(SWEETNOTHINGS.ID, "WhisperToastNotification", {
-            name: game.i18n.localize("SWEETNOTHINGS.CONFIGURATION.WHISPER_TOAST_NOTIFICATION.Name"),
-            hint: game.i18n.localize("SWEETNOTHINGS.CONFIGURATION.WHISPER_TOAST_NOTIFICATION.Hint"),
             restricted: false,
-            config: true,
             default: true,
             scope: 'client',
             type: Boolean
+        });
+
+        game.settings.register(SWEETNOTHINGS.ID, "WhisperEnableSound", {
+            restricted: false,
+            scope: 'client',
+            type: Boolean,
+            default: true
+        });
+
+        game.settings.register(SWEETNOTHINGS.ID, "WhisperNotificationSound", {
+            restricted: false,
+            scope: 'client',
+            type: String,
+            default: 'modules/sweetnothings/sounds/ting.ogg'
+        });
+
+        game.settings.register(SWEETNOTHINGS.ID, "WhisperNotificationVolume", {
+            restricted: false,
+            scope: 'client',
+            type: Number,
+            default: 0.1
         });
 
         //Register the setting menu
@@ -131,11 +149,20 @@ export class SweetNothings {
 
     static checkForWhisper(message) {
         let enableToastNotification = game.settings.get(SWEETNOTHINGS.ID, "WhisperToastNotification");
+        let enableNotificationSound = game.settings.get(SWEETNOTHINGS.ID, "WhisperEnableSound");
 
-        if (enableToastNotification && message.data.whisper && message.data.whisper.includes(game.userId)) {
+        if (message.data.whisper && message.data.whisper.includes(game.userId)) {
             //This message is a whisper to us!
-            let sender = ChatMessage.getSpeaker(message).alias;
-            ui.notifications.info(game.i18n.localize("SWEETNOTHINGS.NOTIFICATIONS.NEW_MESSAGE") + ` ${sender}`);
+            if (enableToastNotification) {
+                let sender = ChatMessage.getSpeaker(message).alias;
+                ui.notifications.info(game.i18n.localize("SWEETNOTHINGS.NOTIFICATIONS.NEW_MESSAGE") + ` ${sender}`);
+            }
+
+            if (enableNotificationSound) {
+                let src = game.settings.get(SWEETNOTHINGS.ID, "WhisperNotificationSound");
+                let volume = game.settings.get(SWEETNOTHINGS.ID, "WhisperNotificationVolume");
+                AudioHelper.play({src, volume, autoplay: true, loop: false}, true);
+            }
         }
     }
 }
