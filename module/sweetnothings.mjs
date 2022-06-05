@@ -49,6 +49,16 @@ export class SweetNothings {
             game.settings.register(SWEETNOTHINGS.ID, setting, SWEETNOTHINGS.SETTINGS[setting]);
         }
 
+        game.settings.register(SWEETNOTHINGS.ID, "GM_ALWAYS_IC", {
+            name: game.i18n.localize("SWEETNOTHINGS.CONFIGURATION.GM_ALWAYS_IC.Name"),
+            hint: game.i18n.localize("SWEETNOTHINGS.CONFIGURATION.GM_ALWAYS_IC.Hint"),
+            restricted: true,
+            config: true,
+            default: true,
+            scope: 'world',
+            type: Boolean
+        })
+
         game.settings.register(SWEETNOTHINGS.ID, "WhisperToastNotification", {
             name: game.i18n.localize("SWEETNOTHINGS.CONFIGURATION.WHISPER_TOAST_NOTIFICATION.Name"),
             hint: game.i18n.localize("SWEETNOTHINGS.CONFIGURATION.WHISPER_TOAST_NOTIFICATION.Hint"),

@@ -149,7 +149,12 @@ export class SweetNothingsDialog extends FormApplication {
         };
 
         if (this.#mode === "whisper") {
-            chatData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER;
+            if (game.settings.get(SWEETNOTHINGS.ID, "GM_ALWAYS_IC")) {
+                chatData.type = CONST.CHAT_MESSAGE_TYPES.IC;
+            } else {
+                chatData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER;
+            }
+
             if (this.#whisperTargets.length === 0 && this.#replyTarget) { this.#whisperTargets.push(this.#replyTarget); }
 
             if (typeof (this.#whisperTargets) === 'boolean') {

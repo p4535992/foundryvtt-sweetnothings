@@ -13,6 +13,10 @@
         "CONFIGURATION": {
             "DEFAULT_CHATMODE": "Default Chatmode",
             "DEFAULT_DIALOG": "Default Dialog",
+            "GM_ALWAYS_IC": {
+                "Hint": "Whispers are always flagged as IC, making it play nicely with Tabbed Chat Log module.",
+                "Name": "Whispers always flagged IC?"
+            },
             "HINT": "Configure your Sweet Nothings preferences",
             "LABEL": "Sweet Nothings Individual User Configuration",
             "WHISPER_TOAST_NOTIFICATION": {
