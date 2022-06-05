@@ -36,11 +36,13 @@ export class SweetNothingsDialog extends FormApplication {
         //Add a configure button to the title bar
         buttons.unshift({
             label: "",
-            class: "",
+            class: "sweetNothingsConfigButton",
             title: game.i18n.localize("SWEETNOTHINGS.CONFIGURATION.HINT"),
             icon: "fas fa-cog",
-            onclick: () => this.renderConfig()
-        })
+            onclick: () => { this.renderConfig(); }
+        });
+
+        SweetNothings.log(false, buttons);
 
         return buttons;
     }
