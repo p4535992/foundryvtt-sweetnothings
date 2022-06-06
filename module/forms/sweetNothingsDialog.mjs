@@ -7,6 +7,7 @@ export class SweetNothingsDialog extends FormApplication {
     #chatMode = null;
     #whisperTargets = [];
     #replyTarget = null;
+    #history = [];
 
     constructor(object, options) {
         super(object, options);
@@ -14,11 +15,13 @@ export class SweetNothingsDialog extends FormApplication {
         this._getDefaults();
     }
 
-    _getDefaults() {
+    async _getDefaults() {
         this.#mode = game.settings.get(SWEETNOTHINGS.ID, "DEFAULT_DIALOG");
         this.#chatMode = game.settings.get(SWEETNOTHINGS.ID, "DEFAULT_CHATMODE");
         this.#whisperTargets = [];
         this.#replyTarget = null;
+
+        this.#history = await this.getWhisperHistory();
     }
 
     static get defaultOptions() {
@@ -63,13 +66,23 @@ export class SweetNothingsDialog extends FormApplication {
     }
 
     getData(options) {
-        return { players: this.getActivePlayers(), messageText: "", chatMode: this.#chatMode }
+        let data = { 
+            players: this.getActivePlayers(), 
+            messageText: "", 
+            chatMode: this.#chatMode, 
+            history: this.#history 
+        };
+
+        SweetNothings.log(false, "Retrieving Data", data);
+
+        return data;
     }
 
     async _updateObject(event, formData) {
         SweetNothings.log(false, formData);
         this.#chatMode = CONST.CHAT_MESSAGE_TYPES[formData.sweetNothingsChatMode.toUpperCase()];
         this.#whisperTargets = formData.sweetNothingTarget;
+        this.#history = await this.getWhisperHistory();
     }
 
     async _handleButtonClick(event) {
@@ -192,5 +205,31 @@ export class SweetNothingsDialog extends FormApplication {
             let lastMessage = lastMessages[lastMessages.length -1];
             this.#replyTarget = lastMessage?.data?.user;
         }
+    }
+
+    async getWhisperHistory() {
+        //Set Date Limit (one week)
+        let today = new Date();
+        let filter = new Date(today.getFullYear(), today.getMonth(), today.getDate()-7).getTime();
+
+        let baseMessages = game.messages.filter(m => m.data.timestamp >= filter && m.data.whisper.includes(game.userId));
+        let toRender = [];
+        //Filter now based on selected targets
+        if (this.#whisperTargets && this.#whisperTargets.length > 0) {
+            for (let target of this.#whisperTargets) {
+                toRender = toRender.concat(baseMessages.filter(m => m.data.owner === target || m.data.whisper.includes(target)));
+            }
+        } else {
+            toRender = toRender.concat(baseMessages);
+        }
+
+        //Time to map it
+        let history = [];
+        for (let t of toRender) {
+            let m = await t.getHTML();
+            history.push(m[0]?.outerHTML);
+        }
+
+        return history;
     }
 }
