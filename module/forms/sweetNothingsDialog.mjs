@@ -8,6 +8,9 @@ export class SweetNothingsDialog extends FormApplication {
     #whisperTargets = [];
     #replyTarget = null;
     #history = [];
+    #sideBar = null;
+    #historyPanel = null;
+    #togglePanel = null;
 
     constructor(object, options) {
         super(object, options);
@@ -62,6 +65,30 @@ export class SweetNothingsDialog extends FormApplication {
     activateListeners(html) {
         super.activateListeners(html);
 
+        
+        SweetNothings.log(false, "Get Defaults:", this);
+        //Setup Whisper History Panel
+        this.#sideBar = document.createElement("div");
+        this.#sideBar.id = "sweetNothingsDialogPanel";
+        this.#sideBar.className = "collapsed";
+
+        let _this = this;
+        this.#togglePanel = document.createElement("div");
+        this.#togglePanel.className = "sweetNothingsDialogToggle";
+        this.#togglePanel.onclick = (click) => { _this.#sideBar.classList.toggle("collapsed"); _this.#sideBar.classList.toggle("opened"); }
+
+        this.#historyPanel = document.createElement("ul");
+        this.#historyPanel.className = "sweetNothingsHistory";
+
+        this.#sideBar.append(this.#togglePanel);
+        this.#sideBar.append(this.#historyPanel);
+
+        this.element.prepend(this.#sideBar);
+
+        this.#historyPanel.append(this.#history);
+
+        SweetNothings.log(false, "Toggle Panel:", this.#togglePanel);
+        //$(this.#togglePanel).on('click', this._toggleHistoryPanel(this));
         html.on('click', "[data-action]", this._handleButtonClick.bind(this));
     }
 
@@ -70,7 +97,6 @@ export class SweetNothingsDialog extends FormApplication {
             players: this.getActivePlayers(), 
             messageText: "", 
             chatMode: this.#chatMode, 
-            history: this.#history 
         };
 
         SweetNothings.log(false, "Retrieving Data", data);
@@ -83,6 +109,9 @@ export class SweetNothingsDialog extends FormApplication {
         this.#chatMode = CONST.CHAT_MESSAGE_TYPES[formData.sweetNothingsChatMode.toUpperCase()];
         this.#whisperTargets = formData.sweetNothingTarget;
         this.#history = await this.getWhisperHistory();
+
+        while (this.#historyPanel.firstChild) { this.#historyPanel.removeChild(this.#historyPanel.firstChild); }
+        this.#historyPanel.append(this.#history);
     }
 
     async _handleButtonClick(event) {
@@ -224,12 +253,21 @@ export class SweetNothingsDialog extends FormApplication {
         }
 
         //Time to map it
-        let history = [];
+        let template = document.createElement("template");
+        let html = '';
         for (let t of toRender) {
             let m = await t.getHTML();
-            history.push(m[0]?.outerHTML);
+            html += m[0].outerHTML.replace(`<a class="message-delete"><i class="fas fa-trash"></i></a>`, ``).trim();
         }
 
-        return history;
+        template.innerHTML = html;
+
+        return template.content;
+    }
+
+    _toggleHistoryPanel(event) {
+        SweetNothings.log(false, "Toggle History Panel:", event);
+        this.#sideBar.classList.toggle("collapsed");
+        this.#sideBar.classList.toggle("opened");
     }
 }

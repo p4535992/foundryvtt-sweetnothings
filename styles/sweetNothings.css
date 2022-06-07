@@ -36,3 +36,65 @@
 .sweetflexcol9 { flex-grow: 9; }
 
 .sweetReply { margin: 4px; }
+
+#sweetNothingsDialogPanel {
+    position: absolute;
+    z-index: -1;
+}
+
+#sweetNothingsDialogPanel.collapsed {
+    left: -20px;
+    top: 45%;
+}
+
+#sweetNothingsDialogPanel > .sweetNothingsDialogToggle {
+    height: 30px;
+    width: 20px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    position: absolute;
+    background: url(/ui/parchment.jpg) repeat;
+}
+
+#sweetNothingsDialogPanel.collapsed {
+    animation-name: closing;
+    animation-duration: 0.15s;
+}
+
+#sweetNothingsDialogPanel.collapsed > .sweetNothingsHistory {
+    display: none;
+}
+
+#sweetNothingsDialogPanel.opened {
+    left: -300px;
+    width: 300px;
+    height: 451px;
+    top: 0px;
+    margin-top: 30px;
+    padding-top: 5px;
+    animation-name: opening;
+    animation-duration: 0.5s;
+}
+
+#sweetNothingsDialogPanel.opened > .sweetNothingsDialogToggle {
+    left: -19px;
+    top: 42%;
+}
+
+.sweetNothingsHistory {
+    background: url(/ui/parchment.jpg) repeat;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 1px solid #666;
+}
+
+/* Panel Animations */
+@keyframes opening {
+    from { left: -20px; }
+    to { left: -300px; }
+}
+
+@keyframes closing {
+    from { left: -300px; }
+    to { left: -20px; }
+}
