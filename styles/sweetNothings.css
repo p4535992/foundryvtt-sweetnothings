@@ -37,6 +37,12 @@
 
 .sweetReply { margin: 4px; }
 
+/* Remove Save Button From TCE Box */
+.sweetNothingsMessageBox .editor button[title='Save'] {
+    display: none;
+}
+
+
 #sweetNothingsDialogPanel {
     position: absolute;
     z-index: -1;

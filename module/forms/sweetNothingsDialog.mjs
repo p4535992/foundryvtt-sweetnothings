@@ -129,8 +129,6 @@ export class SweetNothingsDialog extends FormApplication {
             //Reply Target is not online?
             ui.notifications.warn(game.i18n.localize("SWEETNOTHINGS.WARNINGS.TARGET_NOT_ONLINE"));
             this.#mode = "whisper";
-            //this.#replyTarget = null;
-            //SweetNothingsDialog._isReply = false;
         }
 
         activeUsers.push({ id: "GM", name: "GM" });
@@ -145,6 +143,8 @@ export class SweetNothingsDialog extends FormApplication {
             if (!this.#replyTarget) {
                 SweetNothingsDialog._isReply = false; 
                 ui.notifications.warn("No message found to reply to!");
+            } else {
+                this.#whisperTargets.push(this.#replyTarget);
             }
         } else {
             this.#replyTarget = null;
@@ -236,7 +236,7 @@ export class SweetNothingsDialog extends FormApplication {
         let history = [];
         for (let t of toRender) {
             let m = await t.getHTML();
-            history.push(m[0].outerHTML.replace(`<a class="message-delete"><i class="fas fa-trash"></i></a>`, ``).trim());
+            history.push(m[0].outerHTML.replace(`<a class="message-delete"><i class="fas fa-trash"></i></a>`, ``).trim()); //Remove trash can icon!
         }
 
         return history;
