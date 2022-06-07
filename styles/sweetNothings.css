@@ -56,7 +56,7 @@
     background: url(/ui/parchment.jpg) repeat;
 }
 
-#sweetNothingsDialogPanel.collapsed {
+#sweetNothingsDialogPanel.collapsed.animate {
     animation-name: closing;
     animation-duration: 0.15s;
 }
@@ -68,10 +68,12 @@
 #sweetNothingsDialogPanel.opened {
     left: -300px;
     width: 300px;
-    height: 451px;
+    height: 452px;
     top: 0px;
     margin-top: 30px;
-    padding-top: 5px;
+}
+
+#sweetNothingsDialogPanel.opened.animate {
     animation-name: opening;
     animation-duration: 0.5s;
 }
@@ -86,6 +88,14 @@
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     border: 1px solid #666;
+    height: 452px;
+    overflow-y: scroll;
+    padding-left: 5px;
+    color: #000;
+}
+
+.sweetNothingsHistory > ul {
+    padding: 0px;
 }
 
 /* Panel Animations */

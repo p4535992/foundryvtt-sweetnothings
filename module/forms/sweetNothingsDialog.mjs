@@ -8,9 +8,7 @@ export class SweetNothingsDialog extends FormApplication {
     #whisperTargets = [];
     #replyTarget = null;
     #history = [];
-    #sideBar = null;
-    #historyPanel = null;
-    #togglePanel = null;
+    #panelCollapsed = true;
 
     constructor(object, options) {
         super(object, options);
@@ -57,38 +55,17 @@ export class SweetNothingsDialog extends FormApplication {
             onclick: () => { this.renderConfig(); }
         });
 
-        SweetNothings.log(false, "Dialog:", this);
-
         return buttons;
     }
 
-    activateListeners(html) {
+    async activateListeners(html) {
         super.activateListeners(html);
 
-        
-        SweetNothings.log(false, "Get Defaults:", this);
+        SweetNothings.log(false, "Get Defaults:", this, html);
         //Setup Whisper History Panel
-        this.#sideBar = document.createElement("div");
-        this.#sideBar.id = "sweetNothingsDialogPanel";
-        this.#sideBar.className = "collapsed";
+        await this._renderHistoryPanel();
 
-        let _this = this;
-        this.#togglePanel = document.createElement("div");
-        this.#togglePanel.className = "sweetNothingsDialogToggle";
-        this.#togglePanel.onclick = (click) => { _this.#sideBar.classList.toggle("collapsed"); _this.#sideBar.classList.toggle("opened"); }
-
-        this.#historyPanel = document.createElement("ul");
-        this.#historyPanel.className = "sweetNothingsHistory";
-
-        this.#sideBar.append(this.#togglePanel);
-        this.#sideBar.append(this.#historyPanel);
-
-        this.element.prepend(this.#sideBar);
-
-        this.#historyPanel.append(this.#history);
-
-        SweetNothings.log(false, "Toggle Panel:", this.#togglePanel);
-        //$(this.#togglePanel).on('click', this._toggleHistoryPanel(this));
+        this.element.on('click', '.sweetNothingsDialogToggle', this._toggleHistoryPanel.bind(this));
         html.on('click', "[data-action]", this._handleButtonClick.bind(this));
     }
 
@@ -110,8 +87,7 @@ export class SweetNothingsDialog extends FormApplication {
         this.#whisperTargets = formData.sweetNothingTarget;
         this.#history = await this.getWhisperHistory();
 
-        while (this.#historyPanel.firstChild) { this.#historyPanel.removeChild(this.#historyPanel.firstChild); }
-        this.#historyPanel.append(this.#history);
+        await this._renderHistoryPanel();
     }
 
     async _handleButtonClick(event) {
@@ -254,20 +230,30 @@ export class SweetNothingsDialog extends FormApplication {
 
         //Time to map it
         let template = document.createElement("template");
-        let html = '';
+        let history = [];
         for (let t of toRender) {
             let m = await t.getHTML();
-            html += m[0].outerHTML.replace(`<a class="message-delete"><i class="fas fa-trash"></i></a>`, ``).trim();
+            history.push(m[0].outerHTML.replace(`<a class="message-delete"><i class="fas fa-trash"></i></a>`, ``).trim());
         }
 
-        template.innerHTML = html;
-
-        return template.content;
+        return history;
     }
 
     _toggleHistoryPanel(event) {
-        SweetNothings.log(false, "Toggle History Panel:", event);
-        this.#sideBar.classList.toggle("collapsed");
-        this.#sideBar.classList.toggle("opened");
+        this.#panelCollapsed = !this.#panelCollapsed;
+        this.element.find("#sweetNothingsDialogPanel").addClass("animate");
+        this.element.find('#sweetNothingsDialogPanel')[0].classList.toggle("collapsed");
+        this.element.find('#sweetNothingsDialogPanel')[0].classList.toggle("opened");
+    }
+
+    async _renderHistoryPanel() {
+        if (this.element.find("#sweetNothingsDialogPanel")) {
+            this.element.find("#sweetNothingsDialogPanel").remove();
+        }
+
+        if (!this.#history || this.#history.length < 1) { this.#history = await this.getWhisperHistory(); }
+        let sideBar = await renderTemplate(SWEETNOTHINGS.TEMPLATES.HISTORY, { history: this.#history, collapsed: this.#panelCollapsed });
+
+        this.element.prepend(sideBar);
     }
 }

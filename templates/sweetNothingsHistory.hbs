@@ -1,0 +1,17 @@
+<div id="sweetNothingsDialogPanel" class="{{#if collapsed}}collapsed{{else}}opened{{/if}}">
+    <div class="sweetNothingsDialogToggle">
+
+    </div>
+    <div class="sweetNothingsHistory">
+        <h3>{{localize "SWEETNOTHINGS.WHISPER_HISTORY.Title"}}</h3>
+        {{#unless history}}
+        <p>{{localize "SWEETNOTHINGS.WHISPER_HISTORY.No_Results"}}</p>
+        {{else}}
+        <ul>
+            {{#each history}}
+            {{{this}}}
+            {{/each}}
+        </ul>
+        {{/unless}}
+    </div>
+</div>
