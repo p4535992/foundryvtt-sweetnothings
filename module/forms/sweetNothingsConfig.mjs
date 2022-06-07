@@ -35,6 +35,7 @@ export class SweetNothingsConfig extends FormApplication {
         let enableNotification = game.settings.get(SWEETNOTHINGS.ID, "WhisperToastNotification");
         let notificationSound = game.settings.get(SWEETNOTHINGS.ID, "WhisperNotificationSound");
         let notificationVolume = game.settings.get(SWEETNOTHINGS.ID, "WhisperNotificationVolume");
+        let historyLength = game.settings.get(SWEETNOTHINGS.ID, "WhisperHistoryLength");
 
         for (let key of sweetKeys) {
             let currentValue = game.settings.get(SWEETNOTHINGS.ID, key);
@@ -45,7 +46,7 @@ export class SweetNothingsConfig extends FormApplication {
             }
         }
 
-        return { sweetSettings, enableSound, enableNotification, notificationSound, notificationVolume };
+        return { sweetSettings, enableSound, enableNotification, notificationSound, notificationVolume, historyLength };
     }
 
     async _updateObject(event, formData) {

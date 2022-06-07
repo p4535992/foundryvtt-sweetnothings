@@ -213,16 +213,19 @@ export class SweetNothingsDialog extends FormApplication {
     }
 
     async getWhisperHistory() {
-        //Set Date Limit (one week)
+        //Set Date Limit based on config
+        let days = parseInt(game.settings.get(SWEETNOTHINGS.ID, "WHISPER_HISTORY_LENGTH"));
         let today = new Date();
-        let filter = new Date(today.getFullYear(), today.getMonth(), today.getDate()-7).getTime();
+        let filter = new Date(today.getFullYear(), today.getMonth(), today.getDate()-days).getTime();
 
-        let baseMessages = game.messages.filter(m => m.data.timestamp >= filter && m.data.whisper.includes(game.userId));
+        let baseMessages = game.messages.filter(m => m.data.timestamp >= filter && m.data.whisper.includes(game.userId)).sort((a, b) => { return a.data.timestamp > b.data.timestamp ? -1 : 1; });
         let toRender = [];
         //Filter now based on selected targets
-        if (this.#whisperTargets && this.#whisperTargets.length > 0) {
+        SweetNothings.log(false, "Filtering Whisper History:", baseMessages, this.#whisperTargets);
+        if (this.#whisperTargets && this.#whisperTargets.length > 0 && !(this.#whisperTargets.length === 1 && this.#whisperTargets[0] === 'GM')) {
             for (let target of this.#whisperTargets) {
-                toRender = toRender.concat(baseMessages.filter(m => m.data.owner === target || m.data.whisper.includes(target)));
+                if (target === 'GM') { continue; }
+                toRender = toRender.concat(baseMessages.filter(m => m.data.user === target || m.data.whisper.includes(target)));
             }
         } else {
             toRender = toRender.concat(baseMessages);

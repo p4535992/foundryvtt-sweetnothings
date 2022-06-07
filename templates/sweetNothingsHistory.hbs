@@ -1,9 +1,11 @@
 <div id="sweetNothingsDialogPanel" class="{{#if collapsed}}collapsed{{else}}opened{{/if}}">
     <div class="sweetNothingsDialogToggle">
-
+        <i class="expandIcon fas fa-angle-double-left"></i>
+        <i class="collapseIcon fas fa-angle-double-right"></i>
     </div>
     <div class="sweetNothingsHistory">
         <h3>{{localize "SWEETNOTHINGS.WHISPER_HISTORY.Title"}}</h3>
+        <hr />
         {{#unless history}}
         <p>{{localize "SWEETNOTHINGS.WHISPER_HISTORY.No_Results"}}</p>
         {{else}}

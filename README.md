@@ -10,19 +10,25 @@ As a nice shortcut, you may use ALT-R to reply to the last whisper you have rece
 
 Alternatively, you can swap to the Chat mode, which also allows you to set the various chat modes allowed by Foundry.  In Character (IC) and Emote chat modes will also generate the chat bubble above your token's head.  If you are the GM, this will also set the speaker to your selected token.
 
+The angled arrows on the left of the dialog allow you to open/close the whisper history, which will show up to the last week's worth of whispers.  This list will automatically filter 
+the whisper history based on the selected recipient(s).
+
 ## Configuration
 
 Sweet Nothings main configuration is through Foundry's Configure Controls dialog, under the Settings Sidebar.  Sweet Nothings registers it's own category, and you can modify the keybinding shortcut here.
 
 You can also define the defaults for the dialog, either through the normal settings sidebar or using the cog at the top of the Whisper Sweet Nothings dialog.
 
-![The Whisper Dialog](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/09d590a32ce2123d7c83c1dfbabc4c76/Sweet_Nothings_Whisper_Dialog.JPG)
+![The Whisper Dialog](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/16a37434911ceef2d838d4eaa9350870/Sweet_Nothings_Whisper_Dialog_1_3.webp)
 
 ![The Chat Dialog](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/a9d2f527bf42d62f561cff27c1ddfdfe/Sweet_Nothings_Chat_Dialog.JPG)
 
-![Configuration Dialog](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/2a970fe1a0988e8eb77d8881b66746dd/Sweet_Nothings_Options.JPG)
+![Configuration Dialog](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/8d85312f61af00096fdac3304289b670/Sweet_Nothings_Config_1_3.webp)
 
 ![Sample Output](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/f2acfee538cdbd00a6870f55910dcdf6/Sweet_Nothings_Sample.JPG)
+
+## Support Me!
+This module is free for use, however if you enjoy it and wish to help support the developer, please visit my Ko-Fi and leave a tip! [Geekswordsman's Ko-Fi!](https://ko-fi.com/geekswordsman)
 
 ## Attribution
 - 'ting.ogg' notification sound created by Aesterial-Arts originally titled 'Notification Ping', available at https://freesound.org/people/Aesterial-Arts/sounds/633876/ (CC BY 4.0)

@@ -48,13 +48,25 @@
 }
 
 #sweetNothingsDialogPanel > .sweetNothingsDialogToggle {
-    height: 30px;
+    height: 40px;
     width: 20px;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     position: absolute;
     background: url(/ui/parchment.jpg) repeat;
+    color: #000;
+    line-height: 41px;
+    font-size: 23px;
 }
+
+#sweetNothingsDialogPanel.collapsed > .sweetNothingsDialogToggle > .collapseIcon {
+    display: none;
+}
+
+#sweetNothingsDialogPanel.opened > .sweetNothingsDialogToggle > .expandIcon {
+    display: none;
+}
+
 
 #sweetNothingsDialogPanel.collapsed.animate {
     animation-name: closing;
@@ -80,22 +92,28 @@
 
 #sweetNothingsDialogPanel.opened > .sweetNothingsDialogToggle {
     left: -19px;
-    top: 42%;
+    top: calc(50% - 40px);
 }
 
 .sweetNothingsHistory {
     background: url(/ui/parchment.jpg) repeat;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    border: 1px solid #666;
+    border-right: 1px solid #666;
     height: 452px;
-    overflow-y: scroll;
     padding-left: 5px;
+    padding-right: 5px;
     color: #000;
+}
+
+.sweetNothingsHistory > h3 {
+    padding: 4px 0px 0px 5px;
 }
 
 .sweetNothingsHistory > ul {
     padding: 0px;
+    height: 405px;
+    overflow-y: scroll;
 }
 
 /* Panel Animations */

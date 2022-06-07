@@ -87,6 +87,13 @@ export class SweetNothings {
             default: 0.1
         });
 
+        game.settings.register(SWEETNOTHINGS.ID, "WhisperHistoryLength", {
+            restricted: false,
+            scope: 'client',
+            type: Number,
+            default: 7
+        });
+
         //Register the setting menu
         game.settings.registerMenu(SWEETNOTHINGS.ID, "UserConfiguration", {
             name: "PerUserConfiguration",
@@ -128,6 +135,9 @@ export class SweetNothings {
         sweetActions = game.keybindings.actions.get("sweetnothings.whisperSweetNothingsReply");
         sweetActions.name = game.i18n.localize("SWEETNOTHINGS.KEYBINDINGS.REPLY.NAME");
         sweetActions.hint = game.i18n.localize("SWEETNOTHINGS.KEYBINDINGS.REPLY.HINT");
+
+        SweetNothings._checkGreetings();
+        $(document).on("click",".sweetNothingsInitialConfig", SweetNothings._configureSweetWhispers.bind(this));
     }
 
     static preloadHandlebarTemplates = async function() {
@@ -164,5 +174,29 @@ export class SweetNothings {
                 AudioHelper.play({src, volume, autoplay: true, loop: false}, true);
             }
         }
+    }
+
+    static async _checkGreetings() {
+        let initialGreeting = game.user.getFlag(SWEETNOTHINGS.ID, "WhisperGreetingCompleted");
+        if (!initialGreeting) {
+            let content = await renderTemplate(SWEETNOTHINGS.TEMPLATES.GREETING, {});
+
+            let chatData = {
+                author: game.userId,
+                content,
+                type: CONST.CHAT_MESSAGE_TYPES.WHISPER,
+                whisper: [game.userId],
+                speaker: null
+            };
+    
+            let message = await ChatMessage.create(chatData, { });
+
+            game.user.setFlag(SWEETNOTHINGS.ID, "WhisperGreetingCompleted", true);
+        }
+    }
+
+    static _configureSweetWhispers() {
+        let config = new SweetNothingsConfig();
+        config.render(true);
     }
 }
