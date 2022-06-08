@@ -31,6 +31,9 @@
             "NOTIFICATION_SOUND": "Notification Sound",
             "NOTIFICATION_VOLUME": "Notification Volume",
             "WHISPER_HISTORY_LENGTH": "Whisper History Length",
+            "WHISPER_ROLL_IN_HISTORY": "Show Whispered Rolls in History",
+            "WHISPER_ROLL_SOUND_NOTIFICATION": "Enable Sound Notifications for Rolls",
+            "WHISPER_ROLL_TOAST_NOTIFICATION": "Enable Toast Notifications for Rolls",
             "WHISPER_TOAST_NOTIFICATION": "Whisper Toast Notification"
         },
         "DIALOG": {

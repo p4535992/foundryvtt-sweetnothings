@@ -217,8 +217,11 @@ export class SweetNothingsDialog extends FormApplication {
         let days = parseInt(game.settings.get(SWEETNOTHINGS.ID, "WHISPER_HISTORY_LENGTH"));
         let today = new Date();
         let filter = new Date(today.getFullYear(), today.getMonth(), today.getDate()-days).getTime();
+        let includeRollMessages = game.settings.get(SWEETNOTHINGS.ID, "WhisperRollInHistory");
 
         let baseMessages = game.messages.filter(m => m.data.timestamp >= filter && m.data.whisper.includes(game.userId)).sort((a, b) => { return a.data.timestamp > b.data.timestamp ? -1 : 1; });
+        if (!includeRollMessages) { baseMessages = baseMessages.filter(m => m.data.roll === undefined); }
+
         let toRender = [];
         //Filter now based on selected targets
         SweetNothings.log(false, "Filtering Whisper History:", baseMessages, this.#whisperTargets);
@@ -232,7 +235,6 @@ export class SweetNothingsDialog extends FormApplication {
         }
 
         //Time to map it
-        let template = document.createElement("template");
         let history = [];
         for (let t of toRender) {
             let m = await t.getHTML();
