@@ -31,8 +31,8 @@
         }
     ],
     "url": "https://gitlab.com/geekswordsman/sweetnothings",
-    "manifest": "https://gitlab.com/geekswordsman/sweetnothings/-/raw/main/module.json",
-    "download": "https://gitlab.com/geekswordsman/sweetnothings/-/archive/v1.2.2/sweetnothings-v1.2.2.zip",
+    "manifest": "https://gitlab.com/api/v4/projects/Geekswordsman%2sweetnothings/packages/generic/sweetnothings/latest/module.json",
+    "download": "https://gitlab.com/geekswordsman/sweetnothings/-/archive/v1.3.0/sweetnothings-v1.3.0.zip",
     "license": "https://gitlab.com/geekswordsman/sweetnothings/-/raw/main/LICENSE",
     "readme": "https://gitlab.com/geekswordsman/sweetnothings/-/raw/main/README.MD",
     "bugs": "https://gitlab.com/geekswordsman/sweetnothings/-/issues",
