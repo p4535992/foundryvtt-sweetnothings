@@ -13,6 +13,11 @@
     </div>
     <hr />
     {{/each}}
+    <div>
+        <b>{{localize "SWEETNOTHINGS.CONFIGURATION.WHISPER_ROLL_IN_HISTORY"}}</b>
+        <input type="checkbox" name="WhisperRollInHistory" {{#if enableRollInHistory}}checked{{/if}} />
+    </div>
+    <hr />
     <h1>{{localize "SWEETNOTHINGS.CONFIGURATION.NOTIFICATIONS.Name"}}</h1>
     <p>{{localize "SWEETNOTHINGS.CONFIGURATION.NOTIFICATIONS.Hint"}}</p>
     <div>
@@ -20,8 +25,16 @@
         <input type="checkbox" name="WhisperToastNotification" {{#if enableNotification}}checked{{/if}} />
     </div>
     <div>
+        <b>{{localize "SWEETNOTHINGS.CONFIGURATION.WHISPER_ROLL_TOAST_NOTIFICATION"}}</b>
+        <input type="checkbox" name="WhisperRollToastNotification" {{#if enableRollToastNotification}}checked{{/if}} {{#unless enableNotification}}disabled readonly{{/unless}} />
+    </div>
+    <div>
         <b>{{localize "SWEETNOTHINGS.CONFIGURATION.ENABLE_SOUND"}}</b>
         <input type="checkbox" name="WhisperEnableSound" {{#if enableSound}}checked{{/if}} />
+    </div>
+    <div>
+        <b>{{localize "SWEETNOTHINGS.CONFIGURATION.WHISPER_ROLL_SOUND_NOTIFICATION"}}</b>
+        <input type="checkbox" name="WhisperRollSoundNotification" {{#if enableRollSoundNotification}}checked{{/if}} {{#unless enableSound}}disabled readonly{{/unless}} />
     </div>
     <hr />
     <div>

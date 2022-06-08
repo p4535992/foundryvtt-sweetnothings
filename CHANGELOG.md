@@ -1,4 +1,7 @@
 # Sweet Nothings
+## v1.3.1 - 2022-06-08
+ - Added new configuration options to enable toast, sound, and appearance in whisper history for messages with roll data (disabled by default)
+
 ## v1.3.0 - 2022-06-05
  - Corrected bug where config menu could not be accessed with the cog wheel from the Sweet Nothings dialog.
  - Corrected bug where, upon changing preferred defaults, they would not take until a refresh happened.

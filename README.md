@@ -23,7 +23,7 @@ You can also define the defaults for the dialog, either through the normal setti
 
 ![The Chat Dialog](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/a9d2f527bf42d62f561cff27c1ddfdfe/Sweet_Nothings_Chat_Dialog.JPG)
 
-![Configuration Dialog](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/8d85312f61af00096fdac3304289b670/Sweet_Nothings_Config_1_3.webp)
+![Configuration Dialog](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/39e0f053cd987f6548876a676e2ee188/Sweet_Nothings_Config_1_3_1.webp)
 
 ![Sample Output](https://gitlab.com/geekswordsman/SweetNothings/-/wikis/uploads/f2acfee538cdbd00a6870f55910dcdf6/Sweet_Nothings_Sample.JPG)
 
