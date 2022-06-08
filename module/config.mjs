@@ -25,11 +25,26 @@ SWEETNOTHINGS.SETTINGS = {
             "whisper": "SWEETNOTHINGS.DIALOG.WHISPER",
             "chat": "SWEETNOTHINGS.DIALOG.CHAT"
         }
+    },
+    "WHISPER_HISTORY_LENGTH": {
+        config: false,
+        default: 7,
+        scope: 'client',
+        type: String,
+        choices: {
+            1: "1 Day",
+            5: "5 Days",
+            7: "7 Days",
+            14: "14 Days",
+            30: "30 Days"
+        }
     }
 }
 
 SWEETNOTHINGS.TEMPLATE_PATH = `${SWEETNOTHINGS.MODULE_PATH}/templates/`;
 SWEETNOTHINGS.TEMPLATES = {
     CONFIG: `${SWEETNOTHINGS.TEMPLATE_PATH}sweetNothingsConfig.hbs`,
-    DIALOG: `${SWEETNOTHINGS.TEMPLATE_PATH}sweetNothingsDialog.hbs`
+    DIALOG: `${SWEETNOTHINGS.TEMPLATE_PATH}sweetNothingsDialog.hbs`,
+    GREETING: `${SWEETNOTHINGS.TEMPLATE_PATH}sweetNothingsGreeting.hbs`,
+    HISTORY: `${SWEETNOTHINGS.TEMPLATE_PATH}sweetNothingsHistory.hbs`
 }
