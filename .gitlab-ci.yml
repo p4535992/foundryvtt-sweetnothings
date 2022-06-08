@@ -19,7 +19,7 @@ build:
         - apt-get update
         - apt-get install zip
 
-        - zip $ZIP_FILE_NAME -r README.md CHANGELOG.md LICENSE module.json languages/* module/* sounds/* styles/* templates/*
+        - zip $ZIP_FILE_NAME -r README.md CHANGELOG.md LICENSE module.json languages module sounds styles templates
     artifacts:
         paths:
             - $ZIP_FILE_NAME
