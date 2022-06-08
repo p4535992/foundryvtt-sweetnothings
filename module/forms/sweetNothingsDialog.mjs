@@ -83,7 +83,7 @@ export class SweetNothingsDialog extends FormApplication {
 
     async _updateObject(event, formData) {
         SweetNothings.log(false, formData);
-        this.#chatMode = CONST.CHAT_MESSAGE_TYPES[formData.sweetNothingsChatMode.toUpperCase()];
+        this.#chatMode = formData.sweetNothingsChatMode;
         this.#whisperTargets = formData.sweetNothingTarget;
         this.#history = await this.getWhisperHistory();
 
@@ -161,7 +161,7 @@ export class SweetNothingsDialog extends FormApplication {
         let chatData = {
             author: game.userId,
             content: messageText,
-            type: this.#chatMode,
+            type: CONST.CHAT_MESSAGE_TYPES[this.#chatMode.toUpperCase()],
             whisper: null,
             speaker: null
         };
@@ -184,9 +184,9 @@ export class SweetNothingsDialog extends FormApplication {
 
                 chatData.whisper = this.#whisperTargets;
             }
-        } else if (this.#chatMode === (CONST.CHAT_MESSAGE_TYPES.IC || CONST.CHAT_MESSAGE_TYPES.EMOTE || CONST.CHAT_MESSAGE_TYPES.OOC)) {
+        } else if ([CONST.CHAT_MESSAGE_TYPES.IC, CONST.CHAT_MESSAGE_TYPES.EMOTE, CONST.CHAT_MESSAGE_TYPES.OOC].includes(chatData.type)) {
             if (canvas.tokens.controlled.length > 0) {
-                chatData.speaker = ChatMessage.getSpeaker({ token: canvas.tokens.controlled[0] });
+                chatData.speaker = ChatMessage.getSpeaker({ token: canvas.tokens.controlled[0].data });
             } else {
                 if (game.user.character) {
                     chatData.speaker = ChatMessage.getSpeaker({ actor: game.user.character })
@@ -194,7 +194,9 @@ export class SweetNothingsDialog extends FormApplication {
             }
         }
 
-        bubble = (chatData.speaker && this.#chatMode !== CONST.CHAT_MESSAGE_TYPES.OOC) ? true : false;
+        bubble = (chatData.speaker && chatData.type !== CONST.CHAT_MESSAGE_TYPES.OOC) ? true : false;
+
+        SweetNothings.log(false, "Creating Chat Message:", chatData);
 
         await ChatMessage.create(chatData, { chatBubble: bubble });
     }
