@@ -12,7 +12,7 @@ export class SweetNothings {
     }
 
     static initialize() {
-        //Currently cannot localize keybindings in v9.238, so name and hint are 
+        //Currently cannot localize keybindings in v9.238, so name and hint are temporarily not localized.
         game.keybindings.register(SWEETNOTHINGS.ID, "whisperSweetNothings", {
             name: "Name",
             hint: "Hint",
@@ -48,6 +48,51 @@ export class SweetNothings {
         for (let setting of sweetSettings) {
             game.settings.register(SWEETNOTHINGS.ID, setting, SWEETNOTHINGS.SETTINGS[setting]);
         }
+
+        game.settings.register(SWEETNOTHINGS.ID, "GM_ALWAYS_IC", {
+            name: game.i18n.localize("SWEETNOTHINGS.CONFIGURATION.GM_ALWAYS_IC.Name"),
+            hint: game.i18n.localize("SWEETNOTHINGS.CONFIGURATION.GM_ALWAYS_IC.Hint"),
+            restricted: true,
+            config: true,
+            default: true,
+            scope: 'world',
+            type: Boolean
+        })
+
+        game.settings.register(SWEETNOTHINGS.ID, "WhisperToastNotification", {
+            restricted: false,
+            default: true,
+            scope: 'client',
+            type: Boolean
+        });
+
+        game.settings.register(SWEETNOTHINGS.ID, "WhisperEnableSound", {
+            restricted: false,
+            scope: 'client',
+            type: Boolean,
+            default: true
+        });
+
+        game.settings.register(SWEETNOTHINGS.ID, "WhisperNotificationSound", {
+            restricted: false,
+            scope: 'client',
+            type: String,
+            default: 'modules/sweetnothings/sounds/ting.ogg'
+        });
+
+        game.settings.register(SWEETNOTHINGS.ID, "WhisperNotificationVolume", {
+            restricted: false,
+            scope: 'client',
+            type: Number,
+            default: 0.1
+        });
+
+        game.settings.register(SWEETNOTHINGS.ID, "WhisperHistoryLength", {
+            restricted: false,
+            scope: 'client',
+            type: Number,
+            default: 7
+        });
 
         //Register the setting menu
         game.settings.registerMenu(SWEETNOTHINGS.ID, "UserConfiguration", {
@@ -91,7 +136,8 @@ export class SweetNothings {
         sweetActions.name = game.i18n.localize("SWEETNOTHINGS.KEYBINDINGS.REPLY.NAME");
         sweetActions.hint = game.i18n.localize("SWEETNOTHINGS.KEYBINDINGS.REPLY.HINT");
 
-        SweetNothings.dialog = new SweetNothingsDialog();
+        SweetNothings._checkGreetings();
+        $(document).on("click",".sweetNothingsInitialConfig", SweetNothings._configureSweetWhispers.bind(this));
     }
 
     static preloadHandlebarTemplates = async function() {
@@ -100,12 +146,57 @@ export class SweetNothings {
     }
 
     static whisperSweetNothings() {
-        SweetNothings.dialog.display();
+        let dialog = new SweetNothingsDialog();
+        dialog.display();
         return true;
     }
 
     static whisperSweetNothingsReply() {
-        SweetNothings.dialog.display(true);
+        let dialog = new SweetNothingsDialog();
+        dialog.display(true);
         return true;
+    }
+
+    static checkForWhisper(message) {
+        let enableToastNotification = game.settings.get(SWEETNOTHINGS.ID, "WhisperToastNotification");
+        let enableNotificationSound = game.settings.get(SWEETNOTHINGS.ID, "WhisperEnableSound");
+
+        if (message.data.whisper && message.data.whisper.includes(game.userId)) {
+            //This message is a whisper to us!
+            if (enableToastNotification) {
+                let sender = ChatMessage.getSpeaker(message).alias;
+                ui.notifications.info(game.i18n.localize("SWEETNOTHINGS.NOTIFICATIONS.NEW_MESSAGE") + ` ${sender}`);
+            }
+
+            if (enableNotificationSound) {
+                let src = game.settings.get(SWEETNOTHINGS.ID, "WhisperNotificationSound");
+                let volume = game.settings.get(SWEETNOTHINGS.ID, "WhisperNotificationVolume");
+                AudioHelper.play({src, volume, autoplay: true, loop: false}, true);
+            }
+        }
+    }
+
+    static async _checkGreetings() {
+        let initialGreeting = game.user.getFlag(SWEETNOTHINGS.ID, "WhisperGreetingCompleted");
+        if (!initialGreeting) {
+            let content = await renderTemplate(SWEETNOTHINGS.TEMPLATES.GREETING, {});
+
+            let chatData = {
+                author: game.userId,
+                content,
+                type: CONST.CHAT_MESSAGE_TYPES.WHISPER,
+                whisper: [game.userId],
+                speaker: null
+            };
+    
+            let message = await ChatMessage.create(chatData, { });
+
+            game.user.setFlag(SWEETNOTHINGS.ID, "WhisperGreetingCompleted", true);
+        }
+    }
+
+    static _configureSweetWhispers() {
+        let config = new SweetNothingsConfig();
+        config.render(true);
     }
 }
