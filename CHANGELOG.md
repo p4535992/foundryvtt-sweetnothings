@@ -1,4 +1,7 @@
 # Sweet Nothings
+## v1.3.2 - 2022-06-08
+ - Fixed a bug where chat modes were not respecting the selected token.
+ 
 ## v1.3.1 - 2022-06-08
  - Added new configuration options to enable toast, sound, and appearance in whisper history for messages with roll data (disabled by default)
 

@@ -8,7 +8,7 @@ By default, the keybinding is ALT-W.  Pressing this will present the Whisper Swe
 
 As a nice shortcut, you may use ALT-R to reply to the last whisper you have received.  This will automatically select the person who sent the whisper.
 
-Alternatively, you can swap to the Chat mode, which also allows you to set the various chat modes allowed by Foundry.  In Character (IC) and Emote chat modes will also generate the chat bubble above your token's head.  If you are the GM, this will also set the speaker to your selected token.
+Alternatively, you can swap to the Chat mode, which also allows you to set the various chat modes allowed by Foundry.  In Character (IC) and Emote chat modes will also generate the chat bubble above your token's head.  If you are the GM, this will also set the speaker to your selected token.  Utilizing the "Other" chat type will result as speaking as your user, rather than any owned or controlled token.
 
 The angled arrows on the left of the dialog allow you to open/close the whisper history, which will show up to the last week's worth of whispers.  This list will automatically filter 
 the whisper history based on the selected recipient(s).
