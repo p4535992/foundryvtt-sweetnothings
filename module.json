@@ -1,8 +1,7 @@
 {
-    "name": "sweetnothings",
+    "id": "sweetnothings",
     "title": "Sweet Nothings",
     "description": "Powerful Whisper and Chat Tool!",
-    "author": "Geekswordsman (@Geekswordsman#3085)",
     "authors": [
         {
             "name": "Geekswordsman",
@@ -10,8 +9,11 @@
         }
     ],
     "version": "1.3.2",
-    "minimumCoreVersion": "9",
-    "compatibleCoreVersion": "9",
+    "compatibility": {
+        "minimum": "10",
+        "verified": "10",
+        "maximum": "10"
+    },
     "styles": [ 
         "styles/sweetNothings.css" 
     ],

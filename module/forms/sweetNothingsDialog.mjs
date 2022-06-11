@@ -121,7 +121,7 @@ export class SweetNothingsDialog extends FormApplication {
         game.users.forEach(user => {
             //if (user.active && user.id != game.userId) {
             if (user.id !== game.userId) {
-                activeUsers.push({ replyTo: user.id === this.#replyTarget, id: user.id, name: user.data.name });
+                activeUsers.push({ replyTo: user.id === this.#replyTarget, id: user.id, name: user.name });
             }
         });
 
@@ -186,7 +186,7 @@ export class SweetNothingsDialog extends FormApplication {
             }
         } else if ([CONST.CHAT_MESSAGE_TYPES.IC, CONST.CHAT_MESSAGE_TYPES.EMOTE, CONST.CHAT_MESSAGE_TYPES.OOC].includes(chatData.type)) {
             if (canvas.tokens.controlled.length > 0) {
-                chatData.speaker = ChatMessage.getSpeaker({ token: canvas.tokens.controlled[0].data });
+                chatData.speaker = ChatMessage.getSpeaker({ token: canvas.tokens.controlled[0] });
             } else {
                 if (game.user.character) {
                     chatData.speaker = ChatMessage.getSpeaker({ actor: game.user.character })
@@ -207,10 +207,10 @@ export class SweetNothingsDialog extends FormApplication {
     }
 
     getLastWhisperSender() {
-        let lastMessages = game.messages.filter(m => m.data.whisper.includes(game.userId));
+        let lastMessages = game.messages.filter(m => m.whisper.includes(game.userId));
         if (lastMessages) {
             let lastMessage = lastMessages[lastMessages.length -1];
-            this.#replyTarget = lastMessage?.data?.user;
+            this.#replyTarget = lastMessage?.user;
         }
     }
 
@@ -221,8 +221,8 @@ export class SweetNothingsDialog extends FormApplication {
         let filter = new Date(today.getFullYear(), today.getMonth(), today.getDate()-days).getTime();
         let includeRollMessages = game.settings.get(SWEETNOTHINGS.ID, "WhisperRollInHistory");
 
-        let baseMessages = game.messages.filter(m => m.data.timestamp >= filter && m.data.whisper.includes(game.userId)).sort((a, b) => { return a.data.timestamp > b.data.timestamp ? -1 : 1; });
-        if (!includeRollMessages) { baseMessages = baseMessages.filter(m => m.data.roll === undefined); }
+        let baseMessages = game.messages.filter(m => m.timestamp >= filter && m.whisper.includes(game.userId)).sort((a, b) => { return a.timestamp > b.timestamp ? -1 : 1; });
+        if (!includeRollMessages) { baseMessages = baseMessages.filter(m => m.roll === undefined); }
 
         let toRender = [];
         //Filter now based on selected targets
@@ -230,7 +230,7 @@ export class SweetNothingsDialog extends FormApplication {
         if (this.#whisperTargets && this.#whisperTargets.length > 0 && !(this.#whisperTargets.length === 1 && this.#whisperTargets[0] === 'GM')) {
             for (let target of this.#whisperTargets) {
                 if (target === 'GM') { continue; }
-                toRender = toRender.concat(baseMessages.filter(m => m.data.user === target || m.data.whisper.includes(target)));
+                toRender = toRender.concat(baseMessages.filter(m => m.user === target || m.whisper.includes(target)));
             }
         } else {
             toRender = toRender.concat(baseMessages);

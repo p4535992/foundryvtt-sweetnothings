@@ -184,9 +184,9 @@ export class SweetNothings {
         let enableNotificationSound = game.settings.get(SWEETNOTHINGS.ID, "WhisperEnableSound");
         let enableNotificationRollSound = game.settings.get(SWEETNOTHINGS.ID, "WhisperRollSoundNotification");
 
-        if (message.data.whisper && message.data.whisper.includes(game.userId)) {
+        if (message.whisper && message.whisper.includes(game.userId)) {
             //This message is a whisper to us!
-            let hasRollInfo = message.data.roll !== undefined;
+            let hasRollInfo = message.roll !== undefined;
             let showNotification = hasRollInfo ? (enableToastRollNotification && enableToastNotification) : enableToastNotification;
             if (showNotification) {
                 let sender = ChatMessage.getSpeaker(message).alias;
