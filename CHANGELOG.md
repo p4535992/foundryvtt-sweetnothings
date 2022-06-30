@@ -1,4 +1,9 @@
 # Sweet Nothings
+## v1.3.3 - 2022-06-30
+ - Created a framework for enabled/disabling audio and toast notifications for external modules
+ - Added the "damage-log" as an external module to above framework.
+ - Adjusted the border styling of the whisper history to make it more visible when over certain other UI's.
+
 ## v1.3.2 - 2022-06-08
  - Fixed a bug where chat modes were not respecting the selected token.
  
