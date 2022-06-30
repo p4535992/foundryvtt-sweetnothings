@@ -18,6 +18,11 @@
                 "Name": "Configure Defaults"
             },
             "ENABLE_SOUND": "Enable Notification Sound?",
+            "ENABLE_TOAST": "Enable Toast Notification?",
+            "EXTERNAL_MODULES": {
+                "Hint": "Configure toast and audio notifications for any enabled external modules.",
+                "Name": "External Modules"
+            },
             "GM_ALWAYS_IC": {
                 "Hint": "Whispers are always flagged as IC, making it play nicely with Tabbed Chat Log module.",
                 "Name": "Whispers always flagged IC?"

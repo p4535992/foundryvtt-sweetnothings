@@ -115,6 +115,18 @@ export class SweetNothings {
             default: true
         });
 
+        game.settings.register(SWEETNOTHINGS.ID, "ExternalModuleNotifications", {
+            restricted: false,
+            scope: 'client',
+            type: Object,
+            default: {
+                "damage-log": {
+                    "audio": false,
+                    "toast": false
+                }
+            }
+        });
+
         //Register the setting menu
         game.settings.registerMenu(SWEETNOTHINGS.ID, "UserConfiguration", {
             name: "PerUserConfiguration",
@@ -123,6 +135,11 @@ export class SweetNothings {
             icon: "fas fa-wrench",
             type: SweetNothingsConfig
         });
+
+        /* Detect External Modules */
+        for (let key of Object.keys(SWEETNOTHINGS.EXTERNAL_MODULES)) {
+            SWEETNOTHINGS.EXTERNAL_MODULES[key] = !!game.modules.get(key)?.active;
+        }
 
         //Handlebar helper for localizing settings
         Handlebars.registerHelper("sweetNothingsLocalizer", function(key) {
@@ -143,7 +160,7 @@ export class SweetNothings {
             }
 
             return '';
-        })
+        });
 
         return this.preloadHandlebarTemplates();
     }
@@ -184,16 +201,27 @@ export class SweetNothings {
         let enableNotificationSound = game.settings.get(SWEETNOTHINGS.ID, "WhisperEnableSound");
         let enableNotificationRollSound = game.settings.get(SWEETNOTHINGS.ID, "WhisperRollSoundNotification");
 
+        const configurations = game.settings.get(SWEETNOTHINGS.ID, "ExternalModuleNotifications");
+
         if (message.data.whisper && message.data.whisper.includes(game.userId)) {
             //This message is a whisper to us!
             let hasRollInfo = message.data.roll !== undefined;
             let showNotification = hasRollInfo ? (enableToastRollNotification && enableToastNotification) : enableToastNotification;
+            let playSound = hasRollInfo ? (enableNotificationRollSound && enableNotificationSound) : enableNotificationSound;
+
+            //Check for module settings
+            for (let key of Object.keys(configurations)) {
+                if (message.data.flags[key]) {
+                    showNotification = configurations[key].toast;
+                    playSound = configurations[key].audio;
+                }
+            }
+
             if (showNotification) {
                 let sender = ChatMessage.getSpeaker(message).alias;
                 ui.notifications.info(game.i18n.localize("SWEETNOTHINGS.NOTIFICATIONS.NEW_MESSAGE") + ` ${sender}`);
             }
 
-            let playSound = hasRollInfo ? (enableNotificationRollSound && enableNotificationSound) : enableNotificationSound;
             if (playSound) {
                 let src = game.settings.get(SWEETNOTHINGS.ID, "WhisperNotificationSound");
                 let volume = game.settings.get(SWEETNOTHINGS.ID, "WhisperNotificationVolume");
