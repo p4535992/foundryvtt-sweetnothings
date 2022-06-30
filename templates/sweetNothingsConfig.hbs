@@ -49,4 +49,20 @@
         <b>{{localize "SWEETNOTHINGS.CONFIGURATION.NOTIFICATION_VOLUME"}}</b>
         {{rangePicker name="WhisperNotificationVolume" value=notificationVolume min=0.05 max=1.0 step=0.05}}
     </div>
+    <hr />
+    <h1>{{localize "SWEETNOTHINGS.CONFIGURATION.EXTERNAL_MODULES.Name"}}</h1>
+    <p>{{localize "SWEETNOTHINGS.CONFIGURATION.EXTERNAL_MODULES.Hint"}}</p>
+    {{#each externalModules}}
+    {{#if enabled}}
+    <h2>{{label}}</h2>
+    <div>
+        <b>{{localize "SWEETNOTHINGS.CONFIGURATION.ENABLE_TOAST"}}</b>
+        <input type="checkbox" name="external_{{id}}_toast" {{#if enableToast}}checked{{/if}} />
+    </div>
+    <div>
+        <b>{{localize "SWEETNOTHINGS.CONFIGURATION.ENABLE_SOUND"}}</b>
+        <input type="checkbox" name="external_{{id}}_audio" {{#if enableAudio}}checked{{/if}} />
+    </div>
+    {{/if}}
+    {{/each}}
 </form>
