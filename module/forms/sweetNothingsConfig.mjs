@@ -40,6 +40,20 @@ export class SweetNothingsConfig extends FormApplication {
         let enableRollToastNotification = game.settings.get(SWEETNOTHINGS.ID, "WhisperRollToastNotification");
         let enableRollSoundNotification = game.settings.get(SWEETNOTHINGS.ID, "WhisperRollSoundNotification");
 
+        /* External Module Configurations */
+        const configurations = game.settings.get(SWEETNOTHINGS.ID, "ExternalModuleNotifications");
+
+        let externalModules = [];
+        for (let key of Object.keys(SWEETNOTHINGS.EXTERNAL_MODULES)) {
+            externalModules.push({
+                id: key,
+                label: game.modules.get(key)?.data?.title,
+                enabled: SWEETNOTHINGS.EXTERNAL_MODULES[key],
+                enableToast: configurations[key].toast,
+                enableAudio: configurations[key].audio
+            });
+        }
+
         for (let key of sweetKeys) {
             let currentValue = game.settings.get(SWEETNOTHINGS.ID, key);
 
@@ -49,14 +63,28 @@ export class SweetNothingsConfig extends FormApplication {
             }
         }
 
-        return { sweetSettings, enableSound, enableNotification, notificationSound, notificationVolume, historyLength, enableRollInHistory, enableRollToastNotification, enableRollSoundNotification };
+        return { sweetSettings, enableSound, enableNotification, notificationSound, notificationVolume, historyLength, enableRollInHistory, enableRollToastNotification, enableRollSoundNotification, externalModules };
     }
 
     async _updateObject(event, formData) {
+        let configurations = game.settings.get(SWEETNOTHINGS.ID, "ExternalModuleNotifications");
         let keys = Object.keys(formData);
         for (let key of keys) {
-            await game.settings.set(SWEETNOTHINGS.ID, key, formData[key]);
+            if (!key.startsWith("external_")) {
+                await game.settings.set(SWEETNOTHINGS.ID, key, formData[key]);
+            } else {
+                let externalKey = "";
+                if (key.endsWith("_toast")) {
+                    externalKey = key.replace("external_", "").replace("_toast", "");
+                    configurations[externalKey].toast = formData[key];
+                } else {
+                    externalKey = key.replace("external_", "").replace("_audio", "");
+                    configurations[externalKey].audio = formData[key];
+                }
+            }
         }
+
+        await game.settings.set(SWEETNOTHINGS.ID, "ExternalModuleNotifications", configurations);
 
         this.render();
     }
