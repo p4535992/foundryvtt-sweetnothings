@@ -48,3 +48,7 @@ SWEETNOTHINGS.TEMPLATES = {
     GREETING: `${SWEETNOTHINGS.TEMPLATE_PATH}sweetNothingsGreeting.hbs`,
     HISTORY: `${SWEETNOTHINGS.TEMPLATE_PATH}sweetNothingsHistory.hbs`
 }
+
+SWEETNOTHINGS.EXTERNAL_MODULES = {
+    "damage-log": false
+}
