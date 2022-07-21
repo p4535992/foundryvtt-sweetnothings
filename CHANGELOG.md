@@ -1,4 +1,7 @@
 # Sweet Nothings
+## v1.3.4 - 2022-07-21
+ - FoundryVTT v10 Compatibility Update
+ 
 ## v1.3.3 - 2022-06-30
  - Created a framework for enabled/disabling audio and toast notifications for external modules
  - Added the "damage-log" as an external module to above framework.

@@ -166,6 +166,8 @@ export class SweetNothings {
     }
 
     static ready() {
+        SWEETNOTHINGS.FOUNDRY_VERSION = game.version ?? game.data.version;
+
         let sweetActions = game.keybindings.actions.get("sweetnothings.whisperSweetNothings");
         sweetActions.name = game.i18n.localize("SWEETNOTHINGS.TITLE");
         sweetActions.hint = game.i18n.localize("SWEETNOTHINGS.HINT");
@@ -203,15 +205,20 @@ export class SweetNothings {
 
         const configurations = game.settings.get(SWEETNOTHINGS.ID, "ExternalModuleNotifications");
 
-        if (message.data.whisper && message.data.whisper.includes(game.userId)) {
+        if ((SWEETNOTHINGS.FOUNDRY_VERSION >= 10 && message.whisper && message.whisper.includes(game.userId)) || (SWEETNOTHINGS.FOUNDRY_VERSION < 10 && message.data.whisper && message.data.whisper.includes(game.userId))) {
             //This message is a whisper to us!
-            let hasRollInfo = message.data.roll !== undefined;
+            let hasRollInfo = false;
+            if (SWEETNOTHINGS.FOUNDRY_VERSION >= 10) {
+                hasRollInfo = message.roll !== undefined;
+            } else {
+                hasRollInfo = message.data.roll !== undefined;
+            }
             let showNotification = hasRollInfo ? (enableToastRollNotification && enableToastNotification) : enableToastNotification;
             let playSound = hasRollInfo ? (enableNotificationRollSound && enableNotificationSound) : enableNotificationSound;
 
             //Check for module settings
             for (let key of Object.keys(configurations)) {
-                if (message.data.flags[key]) {
+                if ((SWEETNOTHINGS.FOUNDRY_VERSION >= 10 && message.flags[key]) || (SWEETNOTHINGS.FOUNDRY_VERSION < 10 && message.data.flags[key])) {
                     showNotification = configurations[key].toast;
                     playSound = configurations[key].audio;
                 }
