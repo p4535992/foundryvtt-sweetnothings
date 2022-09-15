@@ -2,7 +2,7 @@ import { SWEETNOTHINGS } from "../config.mjs";
 import { HelpFormApplication } from "../about/help-form-application.mjs";
 
 export class SweetNothingsConfig extends HelpFormApplication {
-    constructor() {
+    constructor(object, options) {
         if (!object) { object = {} };
         object.enableAboutButton = true;
 

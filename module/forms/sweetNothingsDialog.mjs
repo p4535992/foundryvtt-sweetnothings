@@ -4,12 +4,14 @@ import { Logger } from "../logger/logger.mjs";
 import { SweetNothingsConfig } from "./sweetNothingsConfig.mjs";
 
 export class SweetNothingsDialog extends HelpFormApplication {
+    #worker = null;
     #mode = null;
     #chatMode = null;
     #whisperTargets = [];
     #replyTarget = null;
     #history = [];
     #panelCollapsed = true;
+    #workerRunning = false;
 
     constructor(object, options) {
         if (!object) { object = {} };
@@ -18,6 +20,9 @@ export class SweetNothingsDialog extends HelpFormApplication {
         super(object, options);
 
         this._getDefaults();
+        if (window.Worker) {
+            this.#worker = new Worker(`/modules/${SWEETNOTHINGS.ID}/module/workers/chatWorker.mjs`);
+        }
     }
 
     async _getDefaults() {
@@ -77,7 +82,7 @@ export class SweetNothingsDialog extends HelpFormApplication {
         let data = { 
             players: this.getActivePlayers(), 
             messageText: "", 
-            chatMode: this.#chatMode, 
+            chatMode: this.#chatMode
         };
 
         Logger.debug(false, "Retrieving Data", data);
@@ -223,40 +228,41 @@ export class SweetNothingsDialog extends HelpFormApplication {
 
     async getWhisperHistory() {
         //Set Date Limit based on config
-        let days = parseInt(game.settings.get(SWEETNOTHINGS.ID, "WHISPER_HISTORY_LENGTH"));
-        let today = new Date();
-        let filter = new Date(today.getFullYear(), today.getMonth(), today.getDate()-days).getTime();
-        let includeRollMessages = game.settings.get(SWEETNOTHINGS.ID, "WhisperRollInHistory");
+        if (window.Worker && this.#worker) {
+            this.#worker.onmessage = async (response) => {
+                //We need to render it!
+                let history = [];
 
-        let baseMessages = null;
-        if (SWEETNOTHINGS.FOUNDRY_VERSION >= 10) {
-            baseMessages = game.messages.filter(m => m.timestamp >= filter && m.whisper.includes(game.userId)).sort((a, b) => { return a.timestamp > b.timestamp ? -1 : 1; });
-            if (!includeRollMessages) { baseMessages = baseMessages.filter(m => m.roll === undefined); }
-        } else {
-            baseMessages = game.messages.filter(m => m.data.timestamp >= filter && m.data.whisper.includes(game.userId)).sort((a, b) => { return a.data.timestamp > b.data.timestamp ? -1 : 1; });
-            if (!includeRollMessages) { baseMessages = baseMessages.filter(m => m.data.roll === undefined); }
-        }
+                let responses = response.data;
+                if (responses.length > 500) {
+                    //Too many to go through, let's cut it down to size
+                    responses = responses.slice(-500);
+                }
 
-        let toRender = [];
-        //Filter now based on selected targets
-        Logger.debug(false, "Filtering Whisper History:", baseMessages, this.#whisperTargets);
-        if (this.#whisperTargets && this.#whisperTargets.length > 0 && !(this.#whisperTargets.length === 1 && this.#whisperTargets[0] === 'GM')) {
-            for (let target of this.#whisperTargets) {
-                if (target === 'GM') { continue; }
-                toRender = SWEETNOTHINGS.FOUNDRY_VERSION >= 10 ? toRender.concat(baseMessages.filter(m => m.user === target || m.whisper.includes(target))) : toRender.concat(baseMessages.filter(m => m.data.user === target || m.data.whisper.includes(target)));
+                for (let t of responses) {
+                    let m = game.messages.get(t.id);
+                    let message = await m.getHTML();
+                    history.push(message[0].outerHTML.replace(`<a class="message-delete"><i class="fas fa-trash"></i></a>`, ``).trim()); //Remove trash can icon!
+                }
+
+                this.#history = history;
+                this.#workerRunning = false;
+                this._renderHistoryPanel();
             }
-        } else {
-            toRender = toRender.concat(baseMessages);
-        }
 
-        //Time to map it
-        let history = [];
-        for (let t of toRender) {
-            let m = await t.getHTML();
-            history.push(m[0].outerHTML.replace(`<a class="message-delete"><i class="fas fa-trash"></i></a>`, ``).trim()); //Remove trash can icon!
-        }
+            let settings = {
+                historyLength: game.settings.get("sweetnothings", "WHISPER_HISTORY_LENGTH"),
+                includeRolls: game.settings.get("sweetnothings", "WhisperRollInHistory"),
+                targets: this.#whisperTargets.filter(t => t !== null),
+                messages: game.messages.map(m => { return { id: m._id, whisper: m.whisper, timestamp: m.timestamp, rolls: m.rolls, user: m.user}}),
+                userId: game.userId,
+                fvttGeneration: game.release?.generation
+            };
 
-        return history;
+            this.#worker.postMessage(settings);
+            this.#workerRunning = true;
+            return;
+        }
     }
 
     _toggleHistoryPanel(event) {
@@ -271,8 +277,7 @@ export class SweetNothingsDialog extends HelpFormApplication {
             this.element.find("#sweetNothingsDialogPanel").remove();
         }
 
-        if (!this.#history || this.#history.length < 1) { this.#history = await this.getWhisperHistory(); }
-        let sideBar = await renderTemplate(SWEETNOTHINGS.TEMPLATES.HISTORY, { history: this.#history, collapsed: this.#panelCollapsed });
+        let sideBar = await renderTemplate(SWEETNOTHINGS.TEMPLATES.HISTORY, { history: this.#history, collapsed: this.#panelCollapsed, loading: this.#workerRunning });
 
         this.element.prepend(sideBar);
     }

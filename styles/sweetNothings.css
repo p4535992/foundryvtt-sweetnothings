@@ -11,26 +11,15 @@
 #sweetNothingsDialog .sweetNothingsChatmodeSelect { margin-top: 6px; margin-bottom: 6px;}
 #sweetNothingsDialog .sweetNothingsBubbles { padding: 4px; background-color: white; border: 1px solid #000; border-radius: 4px; }
 
-#sweetNothingsConfigForm > div {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
+#sweetNothingsConfigForm > div { display: flex; align-items: center; justify-content: flex-start; }
 
-#sweetNothingsConfigForm > div > * {
-    margin-right: 8px;
-}
+#sweetNothingsConfigForm > div > * { margin-right: 8px; }
 
-.sweetNothingsFilePicker {
-    flex: 1;
-    display: flex;
-}
+.sweetNothingsFilePicker { flex: 1; display: flex; }
 
-.sweetNothingsPlayButton {
-    width: 28px;
-}
+.sweetNothingsPlayButton { width: 28px; }
 
-.sweetflexrow { align-content: center; flex-wrap: wrap;}
+.sweetflexrow { align-content: center; flex-wrap: wrap; }
 
 .sweetflexcol2 { flex-grow: 2; }
 .sweetflexcol9 { flex-grow: 9; }
@@ -38,91 +27,24 @@
 .sweetReply { margin: 4px; }
 
 /* Remove Save Button From TCE Box */
-.sweetNothingsMessageBox .editor button[title='Save'] {
-    display: none;
-}
+.sweetNothingsMessageBox .editor button[title='Save'] { display: none; }
+#sweetNothingsDialogPanel { position: absolute; z-index: -1; }
+#sweetNothingsDialogPanel.collapsed { left: -20px; top: 45%; }
+#sweetNothingsDialogPanel > .sweetNothingsDialogToggle { height: 40px; width: 20px; border-top-left-radius: 10px; border-bottom-left-radius: 10px; position: absolute; background: url(/ui/parchment.jpg) repeat; color: #000; line-height: 41px; font-size: 23px; border: 1px solid #666; border-right: none; }
+#sweetNothingsDialogPanel.collapsed > .sweetNothingsDialogToggle > .collapseIcon { display: none; }
+#sweetNothingsDialogPanel.opened > .sweetNothingsDialogToggle > .expandIcon { display: none; }
+#sweetNothingsDialogPanel.collapsed.animate { animation-name: closing; animation-duration: 0.15s; }
+#sweetNothingsDialogPanel.collapsed > .sweetNothingsHistory { display: none; }
+#sweetNothingsDialogPanel.opened { left: -300px; width: 300px; height: 454px; top: 0px; margin-top: 29px; }
+#sweetNothingsDialogPanel.opened.animate { animation-name: opening; animation-duration: 0.5s; }
+#sweetNothingsDialogPanel.opened > .sweetNothingsDialogToggle { left: -19px; top: calc(50% - 40px); }
 
+#sweetNothingsDialogPanel img.sweetNothingsLoading { border: none; width: 21px; display: none; }
+#sweetNothingsDialogPanel .sweetNothingsLoading.sweetNothingsIsLoading { display: inline-block; animation-name: fading; animation-duration: 1.5s; animation-iteration-count: infinite; }
 
-#sweetNothingsDialogPanel {
-    position: absolute;
-    z-index: -1;
-}
-
-#sweetNothingsDialogPanel.collapsed {
-    left: -20px;
-    top: 45%;
-}
-
-#sweetNothingsDialogPanel > .sweetNothingsDialogToggle {
-    height: 40px;
-    width: 20px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    position: absolute;
-    background: url(/ui/parchment.jpg) repeat;
-    color: #000;
-    line-height: 41px;
-    font-size: 23px;
-    border: 1px solid #666;
-    border-right: none;
-}
-
-#sweetNothingsDialogPanel.collapsed > .sweetNothingsDialogToggle > .collapseIcon {
-    display: none;
-}
-
-#sweetNothingsDialogPanel.opened > .sweetNothingsDialogToggle > .expandIcon {
-    display: none;
-}
-
-
-#sweetNothingsDialogPanel.collapsed.animate {
-    animation-name: closing;
-    animation-duration: 0.15s;
-}
-
-#sweetNothingsDialogPanel.collapsed > .sweetNothingsHistory {
-    display: none;
-}
-
-#sweetNothingsDialogPanel.opened {
-    left: -300px;
-    width: 300px;
-    height: 454px;
-    top: 0px;
-    margin-top: 29px;
-}
-
-#sweetNothingsDialogPanel.opened.animate {
-    animation-name: opening;
-    animation-duration: 0.5s;
-}
-
-#sweetNothingsDialogPanel.opened > .sweetNothingsDialogToggle {
-    left: -19px;
-    top: calc(50% - 40px);
-}
-
-.sweetNothingsHistory {
-    background: url(/ui/parchment.jpg) repeat;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border: 1px solid #666;
-    height: 454px;
-    padding-left: 5px;
-    padding-right: 5px;
-    color: #000;
-}
-
-.sweetNothingsHistory > h3 {
-    padding: 4px 0px 0px 5px;
-}
-
-.sweetNothingsHistory > ul {
-    padding: 0px;
-    height: 405px;
-    overflow-y: scroll;
-}
+.sweetNothingsHistory { background: url(/ui/parchment.jpg) repeat; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border: 1px solid #666; height: 454px; padding-left: 5px; padding-right: 5px; color: #000; }
+.sweetNothingsHistory > h3 { padding: 4px 0px 0px 5px; display: flex; justify-content: space-between; align-items: center; }
+.sweetNothingsHistory > ul { padding: 0px; height: 405px; overflow-y: scroll; }
 
 /* Panel Animations */
 @keyframes opening {
@@ -133,4 +55,10 @@
 @keyframes closing {
     from { left: -300px; }
     to { left: -20px; }
+}
+
+@keyframes fading {
+    from { opacity: 0;}
+    50% { opacity: 255; }
+    to { opacity: 0;}
 }

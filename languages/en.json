@@ -96,6 +96,7 @@
             "TARGET_NOT_ONLINE": "Target to reply to is not online."
         },
         "WHISPER_HISTORY": {
+            "Loading": "Loading...",
             "No_Results": "No History Found.",
             "Title": "Whisper History"
         }

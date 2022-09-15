@@ -4,7 +4,7 @@
         <i class="collapseIcon fas fa-angle-double-right"></i>
     </div>
     <div class="sweetNothingsHistory">
-        <h3>{{localize "SWEETNOTHINGS.WHISPER_HISTORY.Title"}}</h3>
+        <h3>{{localize "SWEETNOTHINGS.WHISPER_HISTORY.Title"}} <img class="sweetNothingsLoading {{#if loading}}sweetNothingsIsLoading{{/if}}" src="/icons/anvil.png" title="{{localize "SWEETNOTHINGS.WHISPER_HISTORY.Loading"}}" /></h3>
         <hr />
         {{#unless history}}
         <p>{{localize "SWEETNOTHINGS.WHISPER_HISTORY.No_Results"}}</p>
