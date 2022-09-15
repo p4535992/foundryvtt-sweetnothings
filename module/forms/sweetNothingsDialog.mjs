@@ -1,8 +1,9 @@
+import { HelpFormApplication } from "../about/help-form-application.mjs";
 import { SWEETNOTHINGS } from "../config.mjs";
-import { SweetNothings } from "../sweetnothings.mjs";
+import { Logger } from "../logger/logger.mjs";
 import { SweetNothingsConfig } from "./sweetNothingsConfig.mjs";
 
-export class SweetNothingsDialog extends FormApplication {
+export class SweetNothingsDialog extends HelpFormApplication {
     #mode = null;
     #chatMode = null;
     #whisperTargets = [];
@@ -11,6 +12,9 @@ export class SweetNothingsDialog extends FormApplication {
     #panelCollapsed = true;
 
     constructor(object, options) {
+        if (!object) { object = {} };
+        object.enableAboutButton = true;
+
         super(object, options);
 
         this._getDefaults();
@@ -61,7 +65,7 @@ export class SweetNothingsDialog extends FormApplication {
     async activateListeners(html) {
         super.activateListeners(html);
 
-        SweetNothings.log(false, "Get Defaults:", this, html);
+        Logger.debug(false, "Get Defaults:", this, html);
         //Setup Whisper History Panel
         await this._renderHistoryPanel();
 
@@ -76,13 +80,13 @@ export class SweetNothingsDialog extends FormApplication {
             chatMode: this.#chatMode, 
         };
 
-        SweetNothings.log(false, "Retrieving Data", data);
+        Logger.debug(false, "Retrieving Data", data);
 
         return data;
     }
 
     async _updateObject(event, formData) {
-        SweetNothings.log(false, formData);
+        Logger.debug(false, formData);
         this.#chatMode = formData.sweetNothingsChatMode;
         this.#whisperTargets = formData.sweetNothingTarget;
         this.#history = await this.getWhisperHistory();
@@ -199,7 +203,7 @@ export class SweetNothingsDialog extends FormApplication {
 
         bubble = (chatData.speaker && chatData.type !== CONST.CHAT_MESSAGE_TYPES.OOC) ? true : false;
 
-        SweetNothings.log(false, "Creating Chat Message:", chatData);
+        Logger.debug(false, "Creating Chat Message:", chatData);
 
         await ChatMessage.create(chatData, { chatBubble: bubble });
     }
@@ -235,7 +239,7 @@ export class SweetNothingsDialog extends FormApplication {
 
         let toRender = [];
         //Filter now based on selected targets
-        SweetNothings.log(false, "Filtering Whisper History:", baseMessages, this.#whisperTargets);
+        Logger.debug(false, "Filtering Whisper History:", baseMessages, this.#whisperTargets);
         if (this.#whisperTargets && this.#whisperTargets.length > 0 && !(this.#whisperTargets.length === 1 && this.#whisperTargets[0] === 'GM')) {
             for (let target of this.#whisperTargets) {
                 if (target === 'GM') { continue; }

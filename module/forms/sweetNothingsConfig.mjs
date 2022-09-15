@@ -1,7 +1,14 @@
 import { SWEETNOTHINGS } from "../config.mjs";
-import { SweetNothings } from "../sweetnothings.mjs";
+import { HelpFormApplication } from "../about/help-form-application.mjs";
 
-export class SweetNothingsConfig extends FormApplication {
+export class SweetNothingsConfig extends HelpFormApplication {
+    constructor() {
+        if (!object) { object = {} };
+        object.enableAboutButton = true;
+
+        super(object, options);
+    }
+
     static get defaultOptions() {
         const options = super.defaultOptions;
 
