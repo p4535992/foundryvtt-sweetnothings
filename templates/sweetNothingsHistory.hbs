@@ -6,6 +6,9 @@
     <div class="sweetNothingsHistory">
         <h3>{{localize "SWEETNOTHINGS.WHISPER_HISTORY.Title"}} <img class="sweetNothingsLoading {{#if loading}}sweetNothingsIsLoading{{/if}}" src="/icons/anvil.png" title="{{localize "SWEETNOTHINGS.WHISPER_HISTORY.Loading"}}" /></h3>
         <hr />
+        {{#if loading}}
+        <p>{{localize "SWEETNOTHINGS.WHISPER_HISTORY.Loading"}}</p>
+        {{else}}
         {{#unless history}}
         <p>{{localize "SWEETNOTHINGS.WHISPER_HISTORY.No_Results"}}</p>
         {{else}}
@@ -15,5 +18,6 @@
             {{/each}}
         </ul>
         {{/unless}}
+        {{/if}}
     </div>
 </div>

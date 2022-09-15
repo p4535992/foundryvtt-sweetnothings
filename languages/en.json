@@ -23,6 +23,7 @@
         "CONFIGURATION": {
             "DEFAULT_CHATMODE": "Default Chatmode",
             "DEFAULT_DIALOG": "Default Dialog",
+            "DEFAULT_MESSAGE_ENGINE": "Default Rich Text Editor:",
             "DEFAULTS": {
                 "Hint": "These are the default options that will be set anytime you open the Sweet Nothings dialog.  They are per user, so these settings only affect you!",
                 "Name": "Configure Defaults"

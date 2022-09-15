@@ -12,6 +12,7 @@ export class SweetNothingsDialog extends HelpFormApplication {
     #history = [];
     #panelCollapsed = true;
     #workerRunning = false;
+    #messageText = null;
 
     constructor(object, options) {
         if (!object) { object = {} };
@@ -30,8 +31,6 @@ export class SweetNothingsDialog extends HelpFormApplication {
         this.#chatMode = game.settings.get(SWEETNOTHINGS.ID, "DEFAULT_CHATMODE");
         this.#whisperTargets = [];
         this.#replyTarget = null;
-
-        this.#history = await this.getWhisperHistory();
     }
 
     static get defaultOptions() {
@@ -79,10 +78,14 @@ export class SweetNothingsDialog extends HelpFormApplication {
     }
 
     getData(options) {
+        let defaultEngine = game.settings.get("sweetnothings", "DEFAULT_MESSAGE_ENGINE");
+
         let data = { 
             players: this.getActivePlayers(), 
             messageText: "", 
-            chatMode: this.#chatMode
+            chatMode: this.#chatMode,
+            isFVTTGen9: !(game.release?.generation >= 10),
+            engine: defaultEngine
         };
 
         Logger.debug(false, "Retrieving Data", data);
@@ -94,9 +97,7 @@ export class SweetNothingsDialog extends HelpFormApplication {
         Logger.debug(false, formData);
         this.#chatMode = formData.sweetNothingsChatMode;
         this.#whisperTargets = formData.sweetNothingTarget;
-        this.#history = await this.getWhisperHistory();
-
-        await this._renderHistoryPanel();
+        this.#messageText = formData.sweetNothingsMessageText;
     }
 
     async _handleButtonClick(event) {
@@ -167,7 +168,7 @@ export class SweetNothingsDialog extends HelpFormApplication {
     }
 
     async submitSweetNothings() {
-        const messageText = this.editors.messageText.mce.getContent();
+        const messageText = this.#messageText ?? this.editors.messageText.mce.getContent();
         let bubble = false;
 
         let chatData = {
@@ -233,13 +234,7 @@ export class SweetNothingsDialog extends HelpFormApplication {
                 //We need to render it!
                 let history = [];
 
-                let responses = response.data;
-                if (responses.length > 500) {
-                    //Too many to go through, let's cut it down to size
-                    responses = responses.slice(-500);
-                }
-
-                for (let t of responses) {
+                for (let t of response.data) {
                     let m = game.messages.get(t.id);
                     let message = await m.getHTML();
                     history.push(message[0].outerHTML.replace(`<a class="message-delete"><i class="fas fa-trash"></i></a>`, ``).trim()); //Remove trash can icon!
@@ -270,9 +265,17 @@ export class SweetNothingsDialog extends HelpFormApplication {
         this.element.find("#sweetNothingsDialogPanel").addClass("animate");
         this.element.find('#sweetNothingsDialogPanel')[0].classList.toggle("collapsed");
         this.element.find('#sweetNothingsDialogPanel')[0].classList.toggle("opened");
+
+        if (Array.from(this.element.find("#sweetNothingsDialogPanel")[0].classList).includes("opened")) {
+            this._renderHistoryPanel(true);
+        }
     }
 
-    async _renderHistoryPanel() {
+    async _renderHistoryPanel(refreshWhisperHistory = false) {
+        if (refreshWhisperHistory) {
+            await this.getWhisperHistory();
+        }
+
         if (this.element.find("#sweetNothingsDialogPanel")) {
             this.element.find("#sweetNothingsDialogPanel").remove();
         }

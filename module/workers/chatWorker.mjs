@@ -29,5 +29,10 @@ async function parseMessages(settings) {
         toRender = toRender.concat(baseMessages);
     }
 
+    if (toRender.length > 500) {
+        //Too many to go through, let's cut it down to size
+        toRender = toRender.slice(0,500);
+    }
+
     postMessage(toRender);
 }

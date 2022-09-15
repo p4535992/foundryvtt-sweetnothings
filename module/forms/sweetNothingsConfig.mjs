@@ -78,6 +78,9 @@ export class SweetNothingsConfig extends HelpFormApplication {
         let keys = Object.keys(formData);
         for (let key of keys) {
             if (!key.startsWith("external_")) {
+                if (key === "DEFAULT_MESSAGE_ENGINE" && !(game.release?.generation >= 10)) {
+                    if (formData[key] === "prosemirror") { formData[key] === "tinymice"; }
+                }
                 await game.settings.set(SWEETNOTHINGS.ID, key, formData[key]);
             } else {
                 let externalKey = "";
