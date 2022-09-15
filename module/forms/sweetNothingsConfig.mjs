@@ -1,7 +1,14 @@
 import { SWEETNOTHINGS } from "../config.mjs";
-import { SweetNothings } from "../sweetnothings.mjs";
+import { HelpFormApplication } from "../about/help-form-application.mjs";
 
-export class SweetNothingsConfig extends FormApplication {
+export class SweetNothingsConfig extends HelpFormApplication {
+    constructor(object, options) {
+        if (!object) { object = {} };
+        object.enableAboutButton = true;
+
+        super(object, options);
+    }
+
     static get defaultOptions() {
         const options = super.defaultOptions;
 
@@ -71,6 +78,9 @@ export class SweetNothingsConfig extends FormApplication {
         let keys = Object.keys(formData);
         for (let key of keys) {
             if (!key.startsWith("external_")) {
+                if (key === "DEFAULT_MESSAGE_ENGINE" && !(game.release?.generation >= 10)) {
+                    if (formData[key] === "prosemirror") { formData[key] === "tinymice"; }
+                }
                 await game.settings.set(SWEETNOTHINGS.ID, key, formData[key]);
             } else {
                 let externalKey = "";

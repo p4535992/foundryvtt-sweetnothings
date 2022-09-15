@@ -39,6 +39,17 @@ SWEETNOTHINGS.SETTINGS = {
             14: "14 Days",
             30: "30 Days"
         }
+    },
+    "DEFAULT_MESSAGE_ENGINE": {
+        config: false,
+        default: game.release?.generation >= 10 ? "prosemirror" : "tinymce",
+        scope: 'client',
+        type: String,
+        choices: {
+            "prosemirror": "Default (Prose Mirror, FVTT v10)",
+            "tinymce": "TinyMCE (Deprecated/FVTT v9)",
+            "none": "None"
+        }
     }
 }
 

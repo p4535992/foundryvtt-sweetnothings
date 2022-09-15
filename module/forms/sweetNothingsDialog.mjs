@@ -1,19 +1,29 @@
+import { HelpFormApplication } from "../about/help-form-application.mjs";
 import { SWEETNOTHINGS } from "../config.mjs";
-import { SweetNothings } from "../sweetnothings.mjs";
+import { Logger } from "../logger/logger.mjs";
 import { SweetNothingsConfig } from "./sweetNothingsConfig.mjs";
 
-export class SweetNothingsDialog extends FormApplication {
+export class SweetNothingsDialog extends HelpFormApplication {
+    #worker = null;
     #mode = null;
     #chatMode = null;
     #whisperTargets = [];
     #replyTarget = null;
     #history = [];
     #panelCollapsed = true;
+    #workerRunning = false;
+    #messageText = null;
 
     constructor(object, options) {
+        if (!object) { object = {} };
+        object.enableAboutButton = true;
+
         super(object, options);
 
         this._getDefaults();
+        if (window.Worker) {
+            this.#worker = new Worker(`/modules/${SWEETNOTHINGS.ID}/module/workers/chatWorker.mjs`);
+        }
     }
 
     async _getDefaults() {
@@ -21,8 +31,6 @@ export class SweetNothingsDialog extends FormApplication {
         this.#chatMode = game.settings.get(SWEETNOTHINGS.ID, "DEFAULT_CHATMODE");
         this.#whisperTargets = [];
         this.#replyTarget = null;
-
-        this.#history = await this.getWhisperHistory();
     }
 
     static get defaultOptions() {
@@ -61,7 +69,7 @@ export class SweetNothingsDialog extends FormApplication {
     async activateListeners(html) {
         super.activateListeners(html);
 
-        SweetNothings.log(false, "Get Defaults:", this, html);
+        Logger.debug(false, "Get Defaults:", this, html);
         //Setup Whisper History Panel
         await this._renderHistoryPanel();
 
@@ -70,24 +78,26 @@ export class SweetNothingsDialog extends FormApplication {
     }
 
     getData(options) {
+        let defaultEngine = game.settings.get("sweetnothings", "DEFAULT_MESSAGE_ENGINE");
+
         let data = { 
             players: this.getActivePlayers(), 
             messageText: "", 
-            chatMode: this.#chatMode, 
+            chatMode: this.#chatMode,
+            isFVTTGen9: !(game.release?.generation >= 10),
+            engine: defaultEngine
         };
 
-        SweetNothings.log(false, "Retrieving Data", data);
+        Logger.debug(false, "Retrieving Data", data);
 
         return data;
     }
 
     async _updateObject(event, formData) {
-        SweetNothings.log(false, formData);
+        Logger.debug(false, formData);
         this.#chatMode = formData.sweetNothingsChatMode;
         this.#whisperTargets = formData.sweetNothingTarget;
-        this.#history = await this.getWhisperHistory();
-
-        await this._renderHistoryPanel();
+        this.#messageText = formData.sweetNothingsMessageText;
     }
 
     async _handleButtonClick(event) {
@@ -158,7 +168,7 @@ export class SweetNothingsDialog extends FormApplication {
     }
 
     async submitSweetNothings() {
-        const messageText = this.editors.messageText.mce.getContent();
+        const messageText = this.#messageText ?? this.editors.messageText.mce.getContent();
         let bubble = false;
 
         let chatData = {
@@ -199,7 +209,7 @@ export class SweetNothingsDialog extends FormApplication {
 
         bubble = (chatData.speaker && chatData.type !== CONST.CHAT_MESSAGE_TYPES.OOC) ? true : false;
 
-        SweetNothings.log(false, "Creating Chat Message:", chatData);
+        Logger.debug(false, "Creating Chat Message:", chatData);
 
         await ChatMessage.create(chatData, { chatBubble: bubble });
     }
@@ -219,40 +229,37 @@ export class SweetNothingsDialog extends FormApplication {
 
     async getWhisperHistory() {
         //Set Date Limit based on config
-        let days = parseInt(game.settings.get(SWEETNOTHINGS.ID, "WHISPER_HISTORY_LENGTH"));
-        let today = new Date();
-        let filter = new Date(today.getFullYear(), today.getMonth(), today.getDate()-days).getTime();
-        let includeRollMessages = game.settings.get(SWEETNOTHINGS.ID, "WhisperRollInHistory");
+        if (window.Worker && this.#worker) {
+            this.#worker.onmessage = async (response) => {
+                //We need to render it!
+                let history = [];
 
-        let baseMessages = null;
-        if (SWEETNOTHINGS.FOUNDRY_VERSION >= 10) {
-            baseMessages = game.messages.filter(m => m.timestamp >= filter && m.whisper.includes(game.userId)).sort((a, b) => { return a.timestamp > b.timestamp ? -1 : 1; });
-            if (!includeRollMessages) { baseMessages = baseMessages.filter(m => m.roll === undefined); }
-        } else {
-            baseMessages = game.messages.filter(m => m.data.timestamp >= filter && m.data.whisper.includes(game.userId)).sort((a, b) => { return a.data.timestamp > b.data.timestamp ? -1 : 1; });
-            if (!includeRollMessages) { baseMessages = baseMessages.filter(m => m.data.roll === undefined); }
-        }
+                for (let t of response.data) {
+                    let m = game.messages.get(t.id);
+                    let message = await m.getHTML();
+                    history.push(message[0].outerHTML.replace(`<a class="message-delete"><i class="fas fa-trash"></i></a>`, ``).trim()); //Remove trash can icon!
+                }
 
-        let toRender = [];
-        //Filter now based on selected targets
-        SweetNothings.log(false, "Filtering Whisper History:", baseMessages, this.#whisperTargets);
-        if (this.#whisperTargets && this.#whisperTargets.length > 0 && !(this.#whisperTargets.length === 1 && this.#whisperTargets[0] === 'GM')) {
-            for (let target of this.#whisperTargets) {
-                if (target === 'GM') { continue; }
-                toRender = SWEETNOTHINGS.FOUNDRY_VERSION >= 10 ? toRender.concat(baseMessages.filter(m => m.user === target || m.whisper.includes(target))) : toRender.concat(baseMessages.filter(m => m.data.user === target || m.data.whisper.includes(target)));
+                this.#history = history;
+                this.#workerRunning = false;
+                this._renderHistoryPanel();
             }
-        } else {
-            toRender = toRender.concat(baseMessages);
-        }
 
-        //Time to map it
-        let history = [];
-        for (let t of toRender) {
-            let m = await t.getHTML();
-            history.push(m[0].outerHTML.replace(`<a class="message-delete"><i class="fas fa-trash"></i></a>`, ``).trim()); //Remove trash can icon!
-        }
+            let settings = {
+                historyLength: game.settings.get("sweetnothings", "WHISPER_HISTORY_LENGTH"),
+                includeRolls: game.settings.get("sweetnothings", "WhisperRollInHistory"),
+                targets: this.#whisperTargets.filter(t => t !== null),
+                messages: game.release?.generation >= 10 ? 
+                    game.messages.map(m => { return { id: m._id, whisper: m.whisper, timestamp: m.timestamp, rolls: m.rolls, user: m.user}}) :
+                    game.messages.map(m => { return { id: m.id, whisper: m.data.whisper, timestamp: m.data.timestamp, rolls: m.data.roll, user: m.user}}),
+                userId: game.userId,
+                fvttGeneration: game.release?.generation
+            };
 
-        return history;
+            this.#worker.postMessage(settings);
+            this.#workerRunning = true;
+            return;
+        }
     }
 
     _toggleHistoryPanel(event) {
@@ -260,15 +267,22 @@ export class SweetNothingsDialog extends FormApplication {
         this.element.find("#sweetNothingsDialogPanel").addClass("animate");
         this.element.find('#sweetNothingsDialogPanel')[0].classList.toggle("collapsed");
         this.element.find('#sweetNothingsDialogPanel')[0].classList.toggle("opened");
+
+        if (Array.from(this.element.find("#sweetNothingsDialogPanel")[0].classList).includes("opened")) {
+            this._renderHistoryPanel(true);
+        }
     }
 
-    async _renderHistoryPanel() {
+    async _renderHistoryPanel(refreshWhisperHistory = false) {
+        if (refreshWhisperHistory) {
+            await this.getWhisperHistory();
+        }
+
         if (this.element.find("#sweetNothingsDialogPanel")) {
             this.element.find("#sweetNothingsDialogPanel").remove();
         }
 
-        if (!this.#history || this.#history.length < 1) { this.#history = await this.getWhisperHistory(); }
-        let sideBar = await renderTemplate(SWEETNOTHINGS.TEMPLATES.HISTORY, { history: this.#history, collapsed: this.#panelCollapsed });
+        let sideBar = await renderTemplate(SWEETNOTHINGS.TEMPLATES.HISTORY, { history: this.#history, collapsed: this.#panelCollapsed, loading: this.#workerRunning });
 
         this.element.prepend(sideBar);
     }
