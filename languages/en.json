@@ -1,5 +1,15 @@
 {
     "SWEETNOTHINGS": {
+        "ABOUT": {
+            "About": "About (Whisper) Sweet Nothings",
+            "CreatedBy": "Created By",
+            "Help": "Help",
+            "LiveSupport": "For live support of (Whisper) Sweet Nothings, join the Foundry VTT Discord and post any questions in #module-troubleshooting!",
+            "ProjectPage": "View the Project Page to report issues or comment on this Project at: ",
+            "SupportTheCreator": "If you enjoy (Whisper) Sweet Nothings, please consider donating to the creator at: ",
+            "Title": "(Whisper) Sweet Nothings",
+            "Wiki": "View the (Whisper) Sweet Nothings wiki at: "
+        },
         "ALT": {
             "CANCEL": "Cancel and close the Sweet Nothings dialog.",
             "SUBMIT": "Submit and send your Sweet Nothings dialog."
@@ -13,6 +23,7 @@
         "CONFIGURATION": {
             "DEFAULT_CHATMODE": "Default Chatmode",
             "DEFAULT_DIALOG": "Default Dialog",
+            "DEFAULT_MESSAGE_ENGINE": "Default Rich Text Editor:",
             "DEFAULTS": {
                 "Hint": "These are the default options that will be set anytime you open the Sweet Nothings dialog.  They are per user, so these settings only affect you!",
                 "Name": "Configure Defaults"
@@ -86,6 +97,7 @@
             "TARGET_NOT_ONLINE": "Target to reply to is not online."
         },
         "WHISPER_HISTORY": {
+            "Loading": "Loading...",
             "No_Results": "No History Found.",
             "Title": "Whisper History"
         }

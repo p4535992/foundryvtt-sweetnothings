@@ -1,17 +1,15 @@
+import { SweetNothingsAPI } from "./api.mjs";
 import { SWEETNOTHINGS } from "./config.mjs";
 import { SweetNothingsConfig } from "./forms/sweetNothingsConfig.mjs";
 import { SweetNothingsDialog } from "./forms/sweetNothingsDialog.mjs";
+import { AboutDialog } from "./about/about-dialog.mjs";
+import { Logger } from "./logger/logger.mjs";
 
 export class SweetNothings {
-    static log(force, ...args) {
-        const shouldLog = force || game.modules.get('_dev-mode')?.api?.getPackageDebugValue(SWEETNOTHINGS.ID);
-
-        if (shouldLog) {
-            console.log(SWEETNOTHINGS.ID, '|', ...args);
-        }
-    }
-
     static initialize() {
+        Logger.info(true, `Initializing ${game.i18n.localize("SWEETNOTHINGS.ABOUT.Title")}`);
+        AboutDialog.TITLE = game.i18n.localize("SWEETNOTHINGS.ABOUT.Title");
+
         //Currently cannot localize keybindings in v9.238, so name and hint are temporarily not localized.
         game.keybindings.register(SWEETNOTHINGS.ID, "whisperSweetNothings", {
             name: "Name",
@@ -178,6 +176,9 @@ export class SweetNothings {
 
         SweetNothings._checkGreetings();
         $(document).on("click",".sweetNothingsInitialConfig", SweetNothings._configureSweetWhispers.bind(this));
+
+        //Init API
+        game.whisperSweetNothings = SweetNothingsAPI;
     }
 
     static preloadHandlebarTemplates = async function() {

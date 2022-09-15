@@ -54,7 +54,15 @@
         </section>
         <hr />
         <div class="sweetNothingsMessageBox">
+            {{#if (eq engine 'none')}}
+            <textarea name="sweetNothingsMessageText">{{messageText}}</textarea>
+            {{else}}
+            {{#if isFVTTGen9}}
             {{editor content=messageText target="messageText" button=false owner=true editable=true}}
+            {{else}}
+            {{editor messageText target="messageText" button=false owner=true editable=true editor=engine}}
+            {{/if}}
+            {{/if}}
         </div>
     </div><br />
     <footer class="flexrow">
