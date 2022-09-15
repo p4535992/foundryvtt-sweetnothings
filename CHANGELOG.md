@@ -1,4 +1,9 @@
 # Sweet Nothings
+## v1.4.0 - 2022-09-15
+ - Enabled ability to change the Rich Text Editor, making it either Prose (Foundry VTT v10 Default), TinyMCE (Foundry VTT v9 Default), or None (basic text box)
+ - Reworked whisper history, vastly improving dialog load and response times! ( #12 )
+ - Added a small API for the module, available via game.whisperSweetNothings.  Currently only one method - game.whisperSweetNothings.whisperSweetNothings(isReply)
+ 
 ## v1.3.4 - 2022-07-21
  - FoundryVTT v10 Compatibility Update
  
