@@ -249,7 +249,9 @@ export class SweetNothingsDialog extends HelpFormApplication {
                 historyLength: game.settings.get("sweetnothings", "WHISPER_HISTORY_LENGTH"),
                 includeRolls: game.settings.get("sweetnothings", "WhisperRollInHistory"),
                 targets: this.#whisperTargets.filter(t => t !== null),
-                messages: game.messages.map(m => { return { id: m._id, whisper: m.whisper, timestamp: m.timestamp, rolls: m.rolls, user: m.user}}),
+                messages: game.release?.generation >= 10 ? 
+                    game.messages.map(m => { return { id: m._id, whisper: m.whisper, timestamp: m.timestamp, rolls: m.rolls, user: m.user}}) :
+                    game.messages.map(m => { return { id: m.id, whisper: m.data.whisper, timestamp: m.data.timestamp, rolls: m.data.roll, user: m.user}}),
                 userId: game.userId,
                 fvttGeneration: game.release?.generation
             };

@@ -11,13 +11,8 @@ async function parseMessages(settings) {
     let targets = settings.targets;
 
     let baseMessages = null;
-    if (settings.fvttGeneration >= 10) {
-        baseMessages = settings.messages.filter(m => m.timestamp >= filter && m.whisper.includes(settings.userId)).sort((a, b) => { return a.timestamp > b.timestamp ? -1 : 1; });
-        if (!includeRollMessages) { baseMessages = baseMessages.filter(m => m.roll === undefined); }
-    } else {
-        baseMessages = settings.messages.filter(m => m.data.timestamp >= filter && m.data.whisper.includes(settings.userId)).sort((a, b) => { return a.data.timestamp > b.data.timestamp ? -1 : 1; });
-        if (!includeRollMessages) { baseMessages = baseMessages.filter(m => m.data.roll === undefined); }
-    }
+    baseMessages = settings.messages.filter(m => m.timestamp >= filter && m.whisper.includes(settings.userId)).sort((a, b) => { return a.timestamp > b.timestamp ? -1 : 1; });
+    if (!includeRollMessages) { baseMessages = baseMessages.filter(m => m.rolls === undefined); }
 
     let toRender = [];
     //Filter now based on selected targets
