@@ -3,7 +3,6 @@ onmessage = function(settings) {
 };
 
 async function parseMessages(settings) {
-    console.log(settings);
     let days = settings.historyLength;
     let today = new Date();
     let filter = new Date(today.getFullYear(), today.getMonth(), today.getDate()-days).getTime();
