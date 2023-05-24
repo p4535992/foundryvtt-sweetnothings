@@ -129,16 +129,16 @@ export class SweetNothingsDialog extends HelpFormApplication {
     getActivePlayers() {
         let activeUsers = [];
         game.users.forEach(user => {
-            if (user.id !== game.userId) {
+            if (user.active && user.id !== game.userId) {
                 if (SWEETNOTHINGS.FOUNDRY_VERSION >= 10) {
-                    activeUsers.push({ replyTo: user.id === this.#replyTarget, id: user.id, name: user.name });
+                    activeUsers.push({ replyTo: user.id === this.#replyTarget.id, id: user.id, name: user.name });
                 } else {
                     activeUsers.push({ replyTo: user.id === this.#replyTarget, id: user.id, name: user.data.name });
                 }
             }
         });
 
-        if (this.#replyTarget && !activeUsers.find(a => a.id === this.#replyTarget)) {
+        if (this.#replyTarget && !activeUsers.find(a => a.replyTo)) {
             //Reply Target is not online?
             ui.notifications.warn(game.i18n.localize("SWEETNOTHINGS.WARNINGS.TARGET_NOT_ONLINE"));
             this.#mode = "whisper";

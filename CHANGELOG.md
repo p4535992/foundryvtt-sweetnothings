@@ -1,4 +1,8 @@
 # Sweet Nothings
+## v1.4.1 - 2023-05-24
+ - FoundryVTT v11 Compatibility Update
+ - Fixed bug where Reply To function was not properly working
+ 
 ## v1.4.0 - 2022-09-15
  - Enabled ability to change the Rich Text Editor, making it either Prose (Foundry VTT v10 Default), TinyMCE (Foundry VTT v9 Default), or None (basic text box)
  - Reworked whisper history, vastly improving dialog load and response times! ( #12 )
