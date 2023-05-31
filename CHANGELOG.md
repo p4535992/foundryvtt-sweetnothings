@@ -1,4 +1,12 @@
 # Sweet Nothings
+## v1.4.2 - 2023-05-31
+ - Fixed deprecation warnings
+ - Fixed bug that could cause the whisper dialog box to not render.
+ - Fixed bug where whispering only to a GM could cause the whisper to fail.
+ - Fixed bug that would close the dialog if Send button was clicked but no whisper recipients.
+ - Fixed bug that did not properly set the engine for the text editor based on configuration choice.
+ - Added ability to send whispers as the selected token.
+ 
 ## v1.4.1 - 2023-05-24
  - FoundryVTT v11 Compatibility Update
  - Fixed bug where Reply To function was not properly working

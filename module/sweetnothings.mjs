@@ -210,7 +210,7 @@ export class SweetNothings {
             //This message is a whisper to us!
             let hasRollInfo = false;
             if (SWEETNOTHINGS.FOUNDRY_VERSION >= 10) {
-                hasRollInfo = message.roll !== undefined;
+                hasRollInfo = message.rolls !== undefined;
             } else {
                 hasRollInfo = message.data.roll !== undefined;
             }

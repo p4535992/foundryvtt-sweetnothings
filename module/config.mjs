@@ -27,6 +27,16 @@ SWEETNOTHINGS.SETTINGS = {
             "chat": "SWEETNOTHINGS.DIALOG.CHAT"
         }
     },
+    "DEFAULT_WHISPER_SOURCE": {
+        config: false,
+        default: 'user',
+        scope: 'client',
+        type: String,
+        choices: {
+            "user": "SWEETNOTHINGS.DIALOG.SOURCEUSER",
+            "token": "SWEETNOTHINGS.DIALOG.SOURCETOKEN"
+        }
+    },
     "WHISPER_HISTORY_LENGTH": {
         config: false,
         default: 7,
@@ -46,7 +56,7 @@ SWEETNOTHINGS.SETTINGS = {
         scope: 'client',
         type: String,
         choices: {
-            "prosemirror": "Default (Prose Mirror, FVTT v10)",
+            "prosemirror": "Default (Prose Mirror, FVTT v10+)",
             "tinymce": "TinyMCE (Deprecated/FVTT v9)",
             "none": "None"
         }
