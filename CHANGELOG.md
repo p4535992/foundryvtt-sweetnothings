@@ -1,4 +1,7 @@
 # Sweet Nothings
+## v1.4.3 - 2023-07-13
+ - Fixed bug that prevented whispers from being sent when editor was set to ProseMirror
+
 ## v1.4.2 - 2023-05-31
  - Fixed deprecation warnings
  - Fixed bug that could cause the whisper dialog box to not render.

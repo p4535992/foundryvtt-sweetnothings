@@ -27,6 +27,36 @@
 
 .sweetReply { margin: 4px; }
 
+/* Force Color to override issues with systems like wfrp 
+#sweetNothingsDialog.app.window-app.form .tox.tox-tinymce input {
+    color: var(--color-text-light-1);
+}
+#sweetNothingsDialog.app.window-app.form .tox.tox-tinymce button {
+    color: var(--color-text-light-1);
+}
+#sweetNothingsDialog.app.window-app.form .tox.tox-tinymce .tox-edit-area {
+    color: var(--color-text-light-1);
+}
+#sweetNothingsDialog.app.window-app.form .tox.tox-tinymce .tox-editor-header * {
+    color: var(--color-text-light-1);
+}
+#sweetNothingsDialog.app.window-app.form .tox.tox-tinymce .tox-editor-header path {
+    fill: var(--color-text-light-1);
+}
+#sweetNothingsDialog.app.window-app.form .tox.tox-tinymce .tox-edit-area > iframe > html {
+    color: var(--color-text-light-1);
+}
+#sweetNothingsConfig.app.window-app.form .window-content #sweetNothingsConfigForm input {
+    color: var(--color-text-light-1);
+}
+#sweetNothingsConfig.app.window-app.form .window-content #sweetNothingsConfigForm button {
+    color: var(--color-text-light-1);
+}
+#sweetNothingsConfig.app.window-app.form .window-content #sweetNothingsConfigForm select {
+    color: var(--color-text-light-1);
+}
+*/
+
 /* Remove Save Button From TCE Box */
 .sweetNothingsMessageBox .editor button[title='Save'] { display: none; }
 #sweetNothingsDialogPanel { position: absolute; z-index: -1; }

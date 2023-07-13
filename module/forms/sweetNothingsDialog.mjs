@@ -98,9 +98,11 @@ export class SweetNothingsDialog extends HelpFormApplication {
 
     async _updateObject(event, formData) {
         Logger.debug(false, formData);
+        let defaultEngine = game.settings.get("sweetnothings", "DEFAULT_MESSAGE_ENGINE");
+
         this.#chatMode = formData.sweetNothingsChatMode;
         this.#whisperTargets = formData.sweetNothingTarget;
-        this.#messageText = formData.sweetNothingsMessageText;
+        this.#messageText = defaultEngine === "prosemirror" ? formData.messageText : formData.sweetNothingsMessageText;
         this.#whisperSource = formData.sweetNothingsSource;
     }
 
@@ -173,6 +175,8 @@ export class SweetNothingsDialog extends HelpFormApplication {
     }
 
     async submitSweetNothings() {
+        await this.saveEditor("messageText");
+
         const messageText = this.#messageText ?? this.editors.messageText.mce.getContent();
         let bubble = false;
 
