@@ -107,7 +107,7 @@ export class SweetNothingsConfig extends HelpFormApplication {
             case 'playSound':
                 let src = game.settings.get(SWEETNOTHINGS.ID, "WhisperNotificationSound");
                 let volume = game.settings.get(SWEETNOTHINGS.ID, "WhisperNotificationVolume");
-                AudioHelper.play({src, volume, autoplay: true, loop: false}, true);
+                AudioHelper.play({src, volume, autoplay: true, loop: false}, false);
                 break;
             default:
                 break;

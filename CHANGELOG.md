@@ -1,4 +1,9 @@
 # Sweet Nothings
+## v1.5.0 - 2023-07-24
+ - Fixed bug that should have been resolved in v1.4.3 with whispers not being sent when editor set to ProseMirror ( #16 )
+ - Fixed bug that caused notifications to be played globally rather than locally ( #19 )
+ - Fixed bug that caused no notifications unless "for rolls" was enabled ( #20 )
+ 
 ## v1.4.3 - 2023-07-13
  - Fixed bug that prevented whispers from being sent when editor was set to ProseMirror
 
