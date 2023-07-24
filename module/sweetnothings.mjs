@@ -210,7 +210,7 @@ export class SweetNothings {
             //This message is a whisper to us!
             let hasRollInfo = false;
             if (SWEETNOTHINGS.FOUNDRY_VERSION >= 10) {
-                hasRollInfo = message.rolls !== undefined;
+                hasRollInfo = Array.isArray(message.rolls) && message.rolls.length > 0;
             } else {
                 hasRollInfo = message.data.roll !== undefined;
             }
@@ -225,6 +225,12 @@ export class SweetNothings {
                 }
             }
 
+            if (message.author === game.userId) {
+                if (!hasRollInfo) {
+                    showNotification = playSound = false;
+                }
+            }
+
             if (showNotification) {
                 let sender = ChatMessage.getSpeaker(message).alias;
                 ui.notifications.info(game.i18n.localize("SWEETNOTHINGS.NOTIFICATIONS.NEW_MESSAGE") + ` ${sender}`);
@@ -233,7 +239,7 @@ export class SweetNothings {
             if (playSound) {
                 let src = game.settings.get(SWEETNOTHINGS.ID, "WhisperNotificationSound");
                 let volume = game.settings.get(SWEETNOTHINGS.ID, "WhisperNotificationVolume");
-                AudioHelper.play({src, volume, autoplay: true, loop: false}, true);
+                AudioHelper.play({src, volume, autoplay: true, loop: false}, false);
             }
         }
     }
