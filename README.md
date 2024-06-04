@@ -1,5 +1,7 @@
 # Sweet Nothings - The Powerful Whisper and Chat Module
 
+## THIS IS A FORK OF THE PROJECT [Sweet Nothings](https://gitlab.com/geekswordsman/SweetNothings) by geekswordsman
+
 This module leverages Foundry v9's new Keybinding API to register a simple, configurable keybinding that brings up a simple yet powerful dialog option to make whispering and chat messages flexible!
 
 ## Usage
